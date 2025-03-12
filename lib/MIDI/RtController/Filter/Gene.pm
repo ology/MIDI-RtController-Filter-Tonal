@@ -16,7 +16,8 @@ use namespace::clean;
   use MIDI::RtController::Filter::Gene ();
 
   my $rtc = MIDI::RtController->new;
-  my $filter = MIDI::RtController::Filter::Gene->new;
+
+  my $filter = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 
   $rtc->add_filter('foo', note_on => $filter->can('foo'));
 
@@ -30,6 +31,19 @@ L<MIDI::RtController> filters.
 =cut
 
 =head1 ATTRIBUTES
+
+=head2 rtc
+
+  $rtc = $filter->rtc;
+
+The L<MIDI::RtController> instance.
+
+=cut
+
+has rtc => (
+    is  => 'ro',
+    isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'MIDI::RtController' },
+);
 
 =head1 METHODS
 
