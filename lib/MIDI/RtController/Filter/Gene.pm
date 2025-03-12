@@ -1,6 +1,8 @@
 package MIDI::RtController::Filter::Gene;
 
-# ABSTRACT: Frobnicate Universes
+# ABSTRACT: Gene's RtController filters
+
+use v5.36;
 
 our $VERSION = '0.0100';
 
@@ -19,7 +21,8 @@ MIDI::RtController::Filter::Gene - Frobnicate Universes
 
 =head1 DESCRIPTION
 
-C<MIDI::RtController::Filter::Gene> frobnicates universes.
+C<MIDI::RtController::Filter::Gene> is the collection of Gene's
+L<MIDI::RtController> filters.
 
 =cut
 
