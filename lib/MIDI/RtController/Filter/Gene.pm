@@ -36,21 +36,68 @@ L<MIDI::RtController> filters.
 
   $rtc = $filter->rtc;
 
-The L<MIDI::RtController> instance.
+The required L<MIDI::RtController> instance provided in the
+constructor.
 
 =cut
 
 has rtc => (
     is  => 'ro',
     isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'MIDI::RtController' },
+    required => 1,
+);
+
+=head2 pedal
+
+  $pedal = $filter->pedal;
+  $filter->pedal($note);
+
+The B<note> used by the pedal-tone filter.
+
+=cut
+
+has pedal => (
+    is  => 'rw',
+    isa => sub { die 'Invalid pedal' unless $_[0] =~ /^\d+$/ },
+    default => sub { 55 },
+);
+
+=head2 channel
+
+  $channel = $filter->channel;
+  $filter->channel($number);
+
+The current MIDI channel (0-15, drums=9).
+
+=cut
+
+has channel => (
+    is  => 'ro',
+    isa => sub { die 'Invalid channel' unless $_[0] =~ /^\d+$/ },
+    default => sub { 0 },
+);
+
+=head2 delay
+
+  $delay = $filter->delay;
+  $filter->delay($number);
+
+The current delay time in seconds.
+
+=cut
+
+has delay => (
+    is  => 'ro',
+    isa => sub { die 'Invalid delay' unless $_[0] =~ /^[\d.]+$/ },
+    default => sub { 0 },
 );
 
 =head1 METHODS
 
-All filter methods must accept a delta-time and a MIDI event ARRAY
-reference, like:
+All filter methods must accept the object, a delta-time, and a MIDI
+event ARRAY reference, like:
 
-  sub pedal_tone ($dt, $event) {
+  sub pedal_tone ($self, $dt, $event) {
     my ($event_type, $chan, $note, $value) = $event->@*;
     ...
     return $boolean;
@@ -87,8 +134,6 @@ __END__
 
 =head1 SEE ALSO
 
-L<Another::Module>
-
-L<http://somewhere>
+L<Moo>
 
 =cut
