@@ -89,7 +89,7 @@ The current delay time in seconds.
 has delay => (
     is  => 'rw',
     isa => sub { die 'Invalid delay' unless $_[0] =~ /^[\d.]+$/ },
-    default => sub { 0 },
+    default => sub { 0.1 },
 );
 
 =head1 METHODS
