@@ -57,9 +57,9 @@ has rtc => (
   $pedal = $rtf->pedal;
   $rtf->pedal($note);
 
-The B<note> used by the pedal-tone filter. Default:
+The B<note> used by the pedal-tone filter.
 
- 55
+Default: C<55>
 
 Which is the MIDI-number for G below middle-C.
 
@@ -78,6 +78,8 @@ has pedal => (
 
 The current MIDI channel (0-15, drums=9).
 
+Default: C<0>
+
 =cut
 
 has channel => (
@@ -91,7 +93,9 @@ has channel => (
   $delay = $rtf->delay;
   $rtf->delay($number);
 
-The current delay time in seconds.
+The current delay time.
+
+Default: C<0.1> seconds
 
 =cut
 
@@ -99,6 +103,23 @@ has delay => (
     is  => 'rw',
     isa => sub { die 'Invalid delay' unless $_[0] =~ /^[\d.]+$/ },
     default => sub { 0.1 },
+);
+
+=head2 velocity
+
+  $velocity = $rtf->velocity;
+  $rtf->velocity($number);
+
+The velocity (or volume) change increment (0-127).
+
+Default: C<10>
+
+=cut
+
+has velocity => (
+    is  => 'rw',
+    isa => sub { die 'Invalid velocity' unless $_[0] =~ /^\d+$/ },
+    default => sub { 10 },
 );
 
 =head2 key
@@ -193,6 +214,28 @@ sub chord_tone ($self, $dt, $event) {
     my ($ev, $chan, $note, $vel) = $event->@*;
     my @notes = $self->_chord_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $vel ]) for @notes;
+    return 0;
+}
+
+=head2 delay_tone
+
+Play a delayed note, or series of notes, based on the given event note
+and B<delay> attribute.
+
+=cut
+
+sub _delay_notes ($self, $note) {
+    return ($note) x $self->feedback;
+}
+sub delay_tone ($self, $dt, $event) {
+    my ($ev, $chan, $note, $vel) = $event->@*;
+    my @notes = $self->_delay_notes($note);
+    my $delay_time = 0;
+    for my $n (@notes) {
+        $delay_time += $self->delay;
+        $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
+        $vel -= $self->velocity;
+    }
     return 0;
 }
 
