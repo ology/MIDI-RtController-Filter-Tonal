@@ -28,7 +28,7 @@ To add a filter for L<MIDI::RtController> to use, do this:
 
   my $rtc = MIDI::RtController->new(...);
 
-  $rtc->add_filter('name', \@event_types => \&filter);
+  $rtc->add_filter($name, \@event_types => \&filter);
 
 Where the B<event_types> are things like C<note_on>,
 C<control_change>, etc. This can also be the special type C<all>,
