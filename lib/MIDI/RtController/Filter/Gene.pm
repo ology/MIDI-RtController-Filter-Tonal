@@ -15,9 +15,9 @@ MIDI::RtController::Filter::Gene - Frobnicate Universes
 
 =head1 SYNOPSIS
 
-  use MIDI::RtController::Filter::Gene ();
-
-  $foo = MIDI::RtController::Filter::Gene::foo();
+  use MIDI::RtController::Filter::Gene qw(:all);
+  # or
+  use MIDI::RtController::Filter::Gene qw(pedal_tone etc);
 
 =head1 DESCRIPTION
 
@@ -28,18 +28,50 @@ L<MIDI::RtController> filters.
 
 =head1 FUNCTIONS
 
-=head2 foo
+All filter routines accept a delta-time and a MIDI event ARRAY
+reference, like:
 
-  $foo = MIDI::RtController::Filter::Gene::foo();
+  sub pedal_tone ($dt, $event) {
+    my ($event_type, $chan, $note, $value) = $event->@*;
+    ...
+    return $boolean;
+  }
 
-Foo!
+A filter also must return a boolean value. This tells
+L<MIDI::RtController> to continue processing other known filters or
+not.
+
+To add a filter for L<MIDI::RtController> to use, do this:
+
+  add_filters(name => \&filter, \@event_types)
+
+Where the B<event_types> are things like C<note_on>,
+C<control_change>, etc. This can also be the special type C<all>,
+which tells L<MIDI::RtController> to process any event. The default is
+the list: C<[note_on, note_off]>.
+
+All three C<add_filters> arguments are required, so if the default is
+desired and nothing else, you can call with C<0> (zero) can be made to
+save typing.
+
+=head2 pedal_tone
+
+  PEDAL, $note, $note + 7
 
 =cut
 
-sub foo {
-    my (%args) = @_;
-    my $foo ||= 'bar';
-    return $foo;
+sub _pedal_notes ($note) {
+    return PEDAL, $note, $note + 7;
+}
+sub pedal_tone ($dt, $event) {
+    my ($ev, $chan, $note, $vel) = $event->@*;
+    my @notes = _pedal_notes($note);
+    my $delay_time = 0;
+    for my $n (@notes) {
+        $delay_time += $delay;
+        $rtc->delay_send($delay_time, [ $ev, $channel, $n, $vel ]);
+    }
+    return 0;
 }
 
 1;
