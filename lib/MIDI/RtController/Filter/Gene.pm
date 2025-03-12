@@ -73,7 +73,7 @@ The current MIDI channel (0-15, drums=9).
 
 has channel => (
     is  => 'rw',
-    isa => sub { die 'Invalid channel' unless $_[0] =~ /^\d+$/ },
+    isa => sub { die 'Invalid channel' unless $_[0] =~ /^\d+$/ && $_[0] < 16 },
     default => sub { 0 },
 );
 
