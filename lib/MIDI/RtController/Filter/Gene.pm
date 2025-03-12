@@ -9,10 +9,6 @@ our $VERSION = '0.0100';
 use strict;
 use warnings;
 
-=head1 NAME
-
-MIDI::RtController::Filter::Gene - Frobnicate Universes
-
 =head1 SYNOPSIS
 
   use MIDI::RtController::Filter::Gene qw(:all);
