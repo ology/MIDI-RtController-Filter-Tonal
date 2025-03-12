@@ -72,7 +72,7 @@ The current MIDI channel (0-15, drums=9).
 =cut
 
 has channel => (
-    is  => 'ro',
+    is  => 'rw',
     isa => sub { die 'Invalid channel' unless $_[0] =~ /^\d+$/ },
     default => sub { 0 },
 );
@@ -87,7 +87,7 @@ The current delay time in seconds.
 =cut
 
 has delay => (
-    is  => 'ro',
+    is  => 'rw',
     isa => sub { die 'Invalid delay' unless $_[0] =~ /^[\d.]+$/ },
     default => sub { 0 },
 );
