@@ -8,6 +8,8 @@ our $VERSION = '0.0100';
 
 use Moo;
 use strictures 2;
+use List::SomeUtils qw(first_index);
+use Music::Scales qw(get_scale_MIDI get_scale_notes);
 use namespace::clean;
 
 =head1 SYNOPSIS
@@ -52,7 +54,11 @@ has rtc => (
   $pedal = $rtf->pedal;
   $rtf->pedal($note);
 
-The B<note> used by the pedal-tone filter.
+The B<note> used by the pedal-tone filter. Default:
+
+ 55
+
+Which is the MIDI-number for G below middle-C.
 
 =cut
 
@@ -92,6 +98,36 @@ has delay => (
     default => sub { 0.1 },
 );
 
+=head2 key
+
+  $key = $rtf->key;
+  $rtf->key($number);
+
+The MIDI number of the musical key.
+
+=cut
+
+has key => (
+    is  => 'rw',
+    isa => sub { die 'Invalid key' unless $_[0] =~ /^[A-G][#b]?$/ },
+    default => sub { 'C' },
+);
+
+=head2 scale
+
+  $scale = $rtf->scale;
+  $rtf->scale($name);
+
+The name of the musical scale.
+
+=cut
+
+has scale => (
+    is  => 'rw',
+    isa => sub { die 'Invalid scale' unless $_[0] =~ /^\w+$/ },
+    default => sub { 'major' },
+);
+
 =head1 METHODS
 
 All filter methods must accept the object, a delta-time, and a MIDI
@@ -109,9 +145,9 @@ not.
 
 =head2 pedal_tone
 
-  PEDAL, $note, $note + 7
+  pedal, $note, $note + 7
 
-Where C<PEDAL> is a constant (C<55>) for G below middle-C.
+Where the B<pedal> is the object attribute.
 
 =cut
 
@@ -126,6 +162,34 @@ sub pedal_tone ($self, $dt, $event) {
         $delay_time += $self->delay;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
     }
+    return 0;
+}
+
+=head2 chord_tone
+
+
+Where C<PEDAL> is a constant (C<55>) for G below middle-C.
+
+=cut
+
+sub _chord_notes ($self, $note) {
+    my $mn = Music::Note->new($note, 'midinum');
+    my $base = uc($mn->format('isobase'));
+    my @scale = get_scale_notes($self->key, $self->scale);
+    my $index = first_index { $_ eq $base } @scale;
+    return $note if $index == -1;
+    my $mtr = Music::ToRoman->new(scale_note => $base);
+    my @chords = $mtr->get_scale_chords;
+    my $chord = $scale[$index] . $chords[$index];
+    my $cn = Music::Chord::Note->new;
+    my @notes = $cn->chord_with_octave($chord, $mn->octave);
+    @notes = map { Music::Note->new($_, 'ISO')->format('midinum') } @notes;
+    return @notes;
+}
+sub chord_tone ($self, $dt, $event) {
+    my ($ev, $chan, $note, $vel) = $event->@*;
+    my @notes = $self->_chord_notes($note);
+    $self->rtc->send_it([ $ev, $self->channel, $_, $vel ]) for @notes;
     return 0;
 }
 
