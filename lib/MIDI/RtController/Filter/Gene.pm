@@ -10,6 +10,9 @@ use Moo;
 use strictures 2;
 use List::SomeUtils qw(first_index);
 use Music::Scales qw(get_scale_MIDI get_scale_notes);
+use Music::Chord::Note ();
+use Music::Note ();
+use Music::ToRoman ();
 use namespace::clean;
 
 =head1 SYNOPSIS
@@ -167,8 +170,8 @@ sub pedal_tone ($self, $dt, $event) {
 
 =head2 chord_tone
 
-
-Where C<PEDAL> is a constant (C<55>) for G below middle-C.
+Play a diatonic chord based on the given event note, B<key> and
+B<scale> attributes.
 
 =cut
 
