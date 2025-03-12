@@ -122,6 +122,40 @@ has velocity => (
     default => sub { 10 },
 );
 
+=head2 feedback
+
+  $feedback = $rtf->feedback;
+  $rtf->feedback($number);
+
+The feedback (0-127).
+
+Default: C<1>
+
+=cut
+
+has feedback => (
+    is  => 'rw',
+    isa => sub { die 'Invalid feedback' unless $_[0] =~ /^\d+$/ },
+    default => sub { 1 },
+);
+
+=head2 offset
+
+  $offset = $rtf->offset;
+  $rtf->offset($number);
+
+The note offset number.
+
+Default: C<-12>
+
+=cut
+
+has offset => (
+    is  => 'rw',
+    isa => sub { die 'Invalid offset' unless $_[0] =~ /^[\d-]+$/ },
+    default => sub { -12 },
+);
+
 =head2 key
 
   $key = $rtf->key;
@@ -236,6 +270,24 @@ sub delay_tone ($self, $dt, $event) {
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
         $vel -= $self->velocity;
     }
+    return 0;
+}
+
+=head2 offset_tone
+
+Play a note and an offset note.
+
+=cut
+
+sub _offset_notes ($self, $note) {
+    my @notes = ($note);
+    push @notes, $note + $self->offset if $self->offset;
+    return @notes;
+}
+sub offset_tone ($self, $dt, $event) {
+    my ($ev, $chan, $note, $vel) = $event->@*;
+    my @notes = $self->_offset_notes($note);
+    $self->rtc->send_it([ $ev, $self->channel, $_, $vel ]) for @notes;
     return 0;
 }
 
