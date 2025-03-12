@@ -24,6 +24,17 @@ MIDI::RtController::Filter::Gene - Frobnicate Universes
 C<MIDI::RtController::Filter::Gene> is the collection of Gene's
 L<MIDI::RtController> filters.
 
+To add a filter for L<MIDI::RtController> to use, do this:
+
+  my $rtc = MIDI::RtController->new(...);
+
+  $rtc->add_filter('name', \@event_types => \&filter);
+
+Where the B<event_types> are things like C<note_on>,
+C<control_change>, etc. This can also be the special type C<all>,
+which tells L<MIDI::RtController> to process any event. The default is
+the list: C<[note_on, note_off]>.
+
 =cut
 
 =head1 FUNCTIONS
@@ -40,17 +51,6 @@ reference, like:
 A filter also must return a boolean value. This tells
 L<MIDI::RtController> to continue processing other known filters or
 not.
-
-To add a filter for L<MIDI::RtController> to use, do this:
-
-  my $rtc = MIDI::RtController->new(...);
-
-  $rtc->add_filter('name', \@event_types => \&filter);
-
-Where the B<event_types> are things like C<note_on>,
-C<control_change>, etc. This can also be the special type C<all>,
-which tells L<MIDI::RtController> to process any event. The default is
-the list: C<[note_on, note_off]>.
 
 =head2 pedal_tone
 
