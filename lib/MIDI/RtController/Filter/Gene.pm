@@ -17,9 +17,9 @@ use namespace::clean;
 
   my $rtc = MIDI::RtController->new; # * input/output required
 
-  my $filter = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
+  my $rtf = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 
-  $rtc->add_filter('foo', note_on => $filter->can('foo'));
+  $rtc->add_filter('foo', note_on => $rtf->can('foo'));
 
   $rtc->run;
 
@@ -34,7 +34,7 @@ L<MIDI::RtController> filters.
 
 =head2 rtc
 
-  $rtc = $filter->rtc;
+  $rtc = $rtf->rtc;
 
 The required L<MIDI::RtController> instance provided in the
 constructor.
@@ -49,8 +49,8 @@ has rtc => (
 
 =head2 pedal
 
-  $pedal = $filter->pedal;
-  $filter->pedal($note);
+  $pedal = $rtf->pedal;
+  $rtf->pedal($note);
 
 The B<note> used by the pedal-tone filter.
 
@@ -64,8 +64,8 @@ has pedal => (
 
 =head2 channel
 
-  $channel = $filter->channel;
-  $filter->channel($number);
+  $channel = $rtf->channel;
+  $rtf->channel($number);
 
 The current MIDI channel (0-15, drums=9).
 
@@ -79,8 +79,8 @@ has channel => (
 
 =head2 delay
 
-  $delay = $filter->delay;
-  $filter->delay($number);
+  $delay = $rtf->delay;
+  $rtf->delay($number);
 
 The current delay time in seconds.
 
