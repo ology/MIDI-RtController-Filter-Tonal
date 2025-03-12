@@ -6,36 +6,34 @@ use v5.36;
 
 our $VERSION = '0.0100';
 
-use strict;
-use warnings;
+use Moo;
+use strictures 2;
+use namespace::clean;
 
 =head1 SYNOPSIS
 
-  use MIDI::RtController::Filter::Gene qw(:all);
-  # or
-  use MIDI::RtController::Filter::Gene qw(pedal_tone etc);
+  use MIDI::RtController ();
+  use MIDI::RtController::Filter::Gene ();
+
+  my $rtc = MIDI::RtController->new(...);
+  my $filter = MIDI::RtController::Filter::Gene->new;
+
+  $rtc->add_filter('foo', note_on => $filter->can('foo'));
+
+  $rtc->run;
 
 =head1 DESCRIPTION
 
 C<MIDI::RtController::Filter::Gene> is the collection of Gene's
 L<MIDI::RtController> filters.
 
-To add a filter for L<MIDI::RtController> to use, do this:
-
-  my $rtc = MIDI::RtController->new(...);
-
-  $rtc->add_filter($name, \@event_types, \&filter);
-
-Where the B<event_types> are things like C<note_on>,
-C<control_change>, etc. This can also be the special type C<all>,
-which tells L<MIDI::RtController> to process any event. The default is
-the list: C<[note_on, note_off]>.
-
 =cut
 
-=head1 FUNCTIONS
+=head1 ATTRIBUTES
 
-All filter routines accept a delta-time and a MIDI event ARRAY
+=head1 METHODS
+
+All filter methods must accept a delta-time and a MIDI event ARRAY
 reference, like:
 
   sub pedal_tone ($dt, $event) {
@@ -51,6 +49,8 @@ not.
 =head2 pedal_tone
 
   PEDAL, $note, $note + 7
+
+Where C<PEDAL> is a constant (C<55>) for G below middle-C.
 
 =cut
 
