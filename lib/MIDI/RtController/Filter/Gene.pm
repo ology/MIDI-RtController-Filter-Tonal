@@ -54,16 +54,16 @@ Where C<PEDAL> is a constant (C<55>) for G below middle-C.
 
 =cut
 
-sub _pedal_notes ($note) {
-    return PEDAL, $note, $note + 7;
+sub _pedal_notes ($self, $note) {
+    return $self->pedal, $note, $note + 7;
 }
-sub pedal_tone ($dt, $event) {
+sub pedal_tone ($self, $dt, $event) {
     my ($ev, $chan, $note, $vel) = $event->@*;
-    my @notes = _pedal_notes($note);
+    my @notes = $self->_pedal_notes($note);
     my $delay_time = 0;
     for my $n (@notes) {
-        $delay_time += $delay;
-        $rtc->delay_send($delay_time, [ $ev, $channel, $n, $vel ]);
+        $delay_time += $self->delay;
+        $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
     }
     return 0;
 }
