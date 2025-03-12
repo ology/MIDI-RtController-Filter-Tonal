@@ -43,16 +43,14 @@ not.
 
 To add a filter for L<MIDI::RtController> to use, do this:
 
-  add_filters(name => \&filter, \@event_types)
+  my $rtc = MIDI::RtController->new(...);
+
+  $rtc->add_filter('name', \@event_types => \&filter);
 
 Where the B<event_types> are things like C<note_on>,
 C<control_change>, etc. This can also be the special type C<all>,
 which tells L<MIDI::RtController> to process any event. The default is
 the list: C<[note_on, note_off]>.
-
-All three C<add_filters> arguments are required, so if the default is
-desired and nothing else, you can call with C<0> (zero) can be made to
-save typing.
 
 =head2 pedal_tone
 
