@@ -15,7 +15,7 @@ use namespace::clean;
   use MIDI::RtController ();
   use MIDI::RtController::Filter::Gene ();
 
-  my $rtc = MIDI::RtController->new;
+  my $rtc = MIDI::RtController->new; # * input/output required
 
   my $filter = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 
