@@ -17,9 +17,9 @@ my $rtc = MIDI::RtController->new(
     output => $output_name,
 );
 
-my $rtfd = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
+my $rtfg = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 
-add_filters('pedal', $rtfd->curry::pedal, 0);
+add_filters('pedal', $rtfg->curry::pedal, 0);
 
 $rtc->run;
 
