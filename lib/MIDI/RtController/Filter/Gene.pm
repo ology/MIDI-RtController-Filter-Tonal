@@ -226,7 +226,8 @@ has arp => (
   $arp_types = $rtf->arp_types;
   $rtf->arp_types(\@strings);
 
-A list of known arpeggiation types.
+A list of known arpeggiation types. This is an L<Array::Circular>
+instance.
 
 Default: C<[up, down, random]>
 
@@ -234,8 +235,8 @@ Default: C<[up, down, random]>
 
 has arp_types => (
     is  => 'rw',
-    isa => ArrayRef[Str],
-    default => sub { [] },
+    isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'Array::Circular' },
+    default => sub { Array::Circular->new(qw(up down random)) },
 );
 
 =head2 arp_type
