@@ -13,6 +13,7 @@ use Music::Scales qw(get_scale_MIDI get_scale_notes);
 use Music::Chord::Note ();
 use Music::Note ();
 use Music::ToRoman ();
+use Music::VoiceGen ();
 use namespace::clean;
 
 =head1 SYNOPSIS
@@ -275,7 +276,7 @@ sub delay_tone ($self, $dt, $event) {
 
 =head2 offset_tone
 
-Play a note and an offset note.
+Play a note and an offset note given the B<offset> value.
 
 =cut
 
@@ -288,6 +289,38 @@ sub offset_tone ($self, $dt, $event) {
     my ($ev, $chan, $note, $vel) = $event->@*;
     my @notes = $self->_offset_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $vel ]) for @notes;
+    return 0;
+}
+
+=head2 walk_tone
+
+Play a chaotically walking, quasi-melody starting with the event note.
+
+=cut
+
+sub _walk_notes ($self, $note) {
+    my $mn = Music::Note->new($note, 'midinum');
+    my @pitches = (
+        get_scale_MIDI($self->key, $mn->octave, $self->scale),
+        get_scale_MIDI($self->key, $mn->octave + 1, $self->scale),
+    );
+    my @intervals = qw(-3 -2 -1 1 2 3);
+    my $voice = Music::VoiceGen->new(
+        pitches   => \@pitches,
+        intervals => \@intervals,
+    );
+    return map { $voice->rand } 1 .. $self->feedback;
+}
+sub walk_tone ($self, $dt, $event) {
+    my ($ev, $chan, $note, $vel) = $event->@*;
+    my @notes = $self->_walk_notes($note);
+use Data::Dumper::Compact qw(ddc);
+warn __PACKAGE__,' L',__LINE__,' ',ddc(\@notes, {max_width=>128});
+    my $delay_time = 0;
+    for my $n (@notes) {
+        $delay_time += $self->delay;
+        $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
+    }
     return 0;
 }
 
