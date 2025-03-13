@@ -9,6 +9,7 @@ our $VERSION = '0.0100';
 use Moo;
 use strictures 2;
 use List::SomeUtils qw(first_index);
+use List::Util qw(shuffle uniq);
 use Music::Scales qw(get_scale_MIDI get_scale_notes);
 use Music::Chord::Note ();
 use Music::Note ();
@@ -204,6 +205,55 @@ has intervals => (
     default => sub { [qw(-3 -2 -1 1 2 3)] },
 );
 
+=head2 arp
+
+  $arp = $rtf->arp;
+  $rtf->arp(\@notes);
+
+The list of MIDI numbered pitches used by the C<arp_tone> filter.
+
+=cut
+
+has arp => (
+    is  => 'rw',
+    isa => ArrayRef[Num],
+    default => sub { [] },
+);
+
+=head2 arp_types
+
+  $arp_types = $rtf->arp_types;
+  $rtf->arp_types(\@strings);
+
+A list of known arpeggiation types.
+
+Default: C<[up, down, random]>
+
+=cut
+
+has arp => (
+    is  => 'rw',
+    isa => ArrayRef[Str],
+    default => sub { [] },
+);
+
+=head2 arp_type
+
+  $arp_type = $rtf->arp_type;
+  $rtf->arp_type($string);
+
+The current arpeggiation type.
+
+Default: C<up>
+
+=cut
+
+has arp_type => (
+    is  => 'rw',
+    isa => Str,
+    default => sub { 'up' },
+);
+
 =head1 METHODS
 
 All filter methods must accept the object, a delta-time, and a MIDI
@@ -337,6 +387,38 @@ sub walk_tone ($self, $dt, $event) {
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
     }
     return 0;
+}
+
+sub _arp_notes ($self, $note) {
+    $self->feedback(2) if $self->feedback < 2;;
+    my @tmp = $self->arp->@*;
+    if (@tmp >= 2 * $self->feedback) { # double, on/off note event
+        shift @tmp;
+        shift @tmp;
+    }
+    push @tmp, $note;
+    $self->arp(\@tmp);
+    my @notes = uniq @tmp;
+    if ($self->arp_type eq 'up') {
+        @notes = sort { $a <=> $b } @notes;
+    }
+    elsif ($self->arp_type eq 'down') {
+        @notes = sort { $b <=> $a } @notes;
+    }
+    elsif ($self->arp_type eq 'random') {
+        @notes = shuffle @notes;
+    }
+    return @notes;
+}
+sub arp_tone ($self, $dt, $event) {
+    my ($ev, $chan, $note, $vel) = $event->@*;
+    my @notes = $self->_arp_notes($note);
+    my $delay_time = 0;
+    for my $n (@notes) {
+        $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $vel ]);
+        $delay_time += $self->delay;
+    }
+    return 1;
 }
 
 1;
