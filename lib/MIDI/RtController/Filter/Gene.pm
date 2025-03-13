@@ -231,7 +231,7 @@ Default: C<[up, down, random]>
 
 =cut
 
-has arp => (
+has arp_types => (
     is  => 'rw',
     isa => ArrayRef[Str],
     default => sub { [] },
