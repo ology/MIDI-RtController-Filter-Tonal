@@ -197,12 +197,11 @@ filter.
 
 =cut
 
-has scale => (
+has intervals => (
     is  => 'rw',
-    isa => sub { die 'Invalid scale' unless $_[0] =~ /^\w+$/ },
-    default => sub { 'major' },
+    isa => sub { die 'Invalid intervals' unless $_[0] =~ /^\w+$/ },
+    default => sub { [qw(-3 -2 -1 1 2 3)] },
 );
-    my @intervals = qw(-3 -2 -1 1 2 3);
 
 =head1 METHODS
 
@@ -322,10 +321,9 @@ sub _walk_notes ($self, $note) {
         get_scale_MIDI($self->key, $mn->octave, $self->scale),
         get_scale_MIDI($self->key, $mn->octave + 1, $self->scale),
     );
-    my @intervals = qw(-3 -2 -1 1 2 3);
     my $voice = Music::VoiceGen->new(
         pitches   => \@pitches,
-        intervals => \@intervals,
+        intervals => $self->intervals,
     );
     return map { $voice->rand } 1 .. $self->feedback;
 }
