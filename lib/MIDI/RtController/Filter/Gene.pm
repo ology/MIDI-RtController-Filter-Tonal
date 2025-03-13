@@ -14,6 +14,7 @@ use Music::Chord::Note ();
 use Music::Note ();
 use Music::ToRoman ();
 use Music::VoiceGen ();
+use Types::Standard qw(ArrayRef Num Str);
 use namespace::clean;
 
 =head1 SYNOPSIS
@@ -68,7 +69,7 @@ Which is the MIDI-number for G below middle-C.
 
 has pedal => (
     is  => 'rw',
-    isa => sub { die 'Invalid pedal' unless $_[0] =~ /^\d+$/ },
+    isa => Num,
     default => sub { 55 },
 );
 
@@ -85,7 +86,7 @@ Default: C<0>
 
 has channel => (
     is  => 'rw',
-    isa => sub { die 'Invalid channel' unless $_[0] =~ /^\d+$/ && $_[0] < 16 },
+    isa => Num,
     default => sub { 0 },
 );
 
@@ -102,7 +103,7 @@ Default: C<0.1> seconds
 
 has delay => (
     is  => 'rw',
-    isa => sub { die 'Invalid delay' unless $_[0] =~ /^[\d.]+$/ },
+    isa => Num,
     default => sub { 0.1 },
 );
 
@@ -119,7 +120,7 @@ Default: C<10>
 
 has velocity => (
     is  => 'rw',
-    isa => sub { die 'Invalid velocity' unless $_[0] =~ /^\d+$/ },
+    isa => Num,
     default => sub { 10 },
 );
 
@@ -136,7 +137,7 @@ Default: C<1>
 
 has feedback => (
     is  => 'rw',
-    isa => sub { die 'Invalid feedback' unless $_[0] =~ /^\d+$/ },
+    isa => Num,
     default => sub { 1 },
 );
 
@@ -153,7 +154,7 @@ Default: C<-12>
 
 has offset => (
     is  => 'rw',
-    isa => sub { die 'Invalid offset' unless $_[0] =~ /^[\d-]+$/ },
+    isa => Num,
     default => sub { -12 },
 );
 
@@ -168,7 +169,7 @@ The MIDI number of the musical key.
 
 has key => (
     is  => 'rw',
-    isa => sub { die 'Invalid key' unless $_[0] =~ /^[A-G][#b]?$/ },
+    isa => Str,
     default => sub { 'C' },
 );
 
@@ -183,7 +184,7 @@ The name of the musical scale.
 
 has scale => (
     is  => 'rw',
-    isa => sub { die 'Invalid scale' unless $_[0] =~ /^\w+$/ },
+    isa => Str,
     default => sub { 'major' },
 );
 
@@ -199,7 +200,7 @@ filter.
 
 has intervals => (
     is  => 'rw',
-    isa => sub { die 'Invalid intervals' unless $_[0] =~ /^\w+$/ },
+    isa => ArrayRef[Num],
     default => sub { [qw(-3 -2 -1 1 2 3)] },
 );
 
