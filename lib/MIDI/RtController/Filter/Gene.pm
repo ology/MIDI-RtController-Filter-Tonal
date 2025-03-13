@@ -438,6 +438,10 @@ L<Moo>
 
 L<List::SomeUtils>
 
+L<List::Util>
+
+L<MIDI::RtMidi::ScorePlayer>
+
 L<Music::Scales>
 
 L<Music::Chord::Note>
@@ -447,5 +451,7 @@ L<Music::Note>
 L<Music::ToRoman>
 
 L<Music::VoiceGen>
+
+L<Types::Standard>
 
 =cut
