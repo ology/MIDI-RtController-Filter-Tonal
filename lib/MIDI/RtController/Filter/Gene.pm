@@ -389,6 +389,13 @@ sub walk_tone ($self, $dt, $event) {
     return 0;
 }
 
+=head2 arp_tone
+
+Play a series of subseqently pressed notes based on the B<feedback>
+setting.
+
+=cut
+
 sub _arp_notes ($self, $note) {
     $self->feedback(2) if $self->feedback < 2;;
     my @tmp = $self->arp->@*;
