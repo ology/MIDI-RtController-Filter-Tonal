@@ -1,6 +1,7 @@
 Revision history for MIDI-RtController-Filter-Gene
 
 {{$NEXT}}
+  - More filters!
 
 0.0100 2025-03-12 16:13:04
   - Mint with Dist::Zilla.
