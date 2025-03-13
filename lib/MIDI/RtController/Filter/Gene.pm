@@ -434,13 +434,13 @@ __END__
 
 =head1 SEE ALSO
 
-L<Moo>
-
 L<List::SomeUtils>
 
 L<List::Util>
 
 L<MIDI::RtMidi::ScorePlayer>
+
+L<Moo>
 
 L<Music::Scales>
 
