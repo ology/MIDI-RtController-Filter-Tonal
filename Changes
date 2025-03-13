@@ -1,6 +1,7 @@
 Revision history for MIDI-RtController-Filter-Gene
 
 {{$NEXT}}
+  - Add the eg/tester.pl program.
 
 0.0101 2025-03-12 18:39:54
   - More filters: Arp and Walk.
