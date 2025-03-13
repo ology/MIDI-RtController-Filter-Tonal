@@ -187,6 +187,23 @@ has scale => (
     default => sub { 'major' },
 );
 
+=head2 intervals
+
+  $intervals = $rtf->intervals;
+  $rtf->intervals(\@intervals);
+
+The voice intervals used by L<Music::VoiceGen> and the C<chord_tone>
+filter.
+
+=cut
+
+has scale => (
+    is  => 'rw',
+    isa => sub { die 'Invalid scale' unless $_[0] =~ /^\w+$/ },
+    default => sub { 'major' },
+);
+    my @intervals = qw(-3 -2 -1 1 2 3);
+
 =head1 METHODS
 
 All filter methods must accept the object, a delta-time, and a MIDI
