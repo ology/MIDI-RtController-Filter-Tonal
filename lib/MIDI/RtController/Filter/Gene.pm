@@ -391,7 +391,7 @@ sub walk_tone ($self, $dt, $event) {
 
 =head2 arp_tone
 
-Play a series of subseqently pressed notes based on the B<feedback>
+Play a series of subsequently pressed notes based on the B<feedback>
 setting.
 
 =cut
