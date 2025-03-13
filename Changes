@@ -2,6 +2,7 @@ Revision history for MIDI-RtController-Filter-Gene
 
 {{$NEXT}}
   - Use Array::Circular.
+  - Fix documentation.
 
 0.0102 2025-03-13 10:27:34
   - Add the eg/tester.pl program.
