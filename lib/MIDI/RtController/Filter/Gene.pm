@@ -314,8 +314,6 @@ sub _walk_notes ($self, $note) {
 sub walk_tone ($self, $dt, $event) {
     my ($ev, $chan, $note, $vel) = $event->@*;
     my @notes = $self->_walk_notes($note);
-use Data::Dumper::Compact qw(ddc);
-warn __PACKAGE__,' L',__LINE__,' ',ddc(\@notes, {max_width=>128});
     my $delay_time = 0;
     for my $n (@notes) {
         $delay_time += $self->delay;
