@@ -295,6 +295,7 @@ sub offset_tone ($self, $dt, $event) {
 =head2 walk_tone
 
 Play a chaotically walking, quasi-melody starting with the event note.
+The number of notes in the "melody" is the B<feedback> setting.
 
 =cut
 
