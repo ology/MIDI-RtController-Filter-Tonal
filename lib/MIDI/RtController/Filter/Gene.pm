@@ -321,8 +321,8 @@ sub chord_tone ($self, $dt, $event) {
 
 =head2 delay_tone
 
-Play a delayed note, or series of notes, based on the given event note
-and B<delay> attribute.
+Play a delayed note, or series of notes, based on the given event
+note, and the B<delay> and B<feedback> attributes.
 
 =cut
 
