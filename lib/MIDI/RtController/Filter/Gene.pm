@@ -345,4 +345,16 @@ __END__
 
 L<Moo>
 
+L<List::SomeUtils>
+
+L<Music::Scales>
+
+L<Music::Chord::Note>
+
+L<Music::Note>
+
+L<Music::ToRoman>
+
+L<Music::VoiceGen>
+
 =cut
