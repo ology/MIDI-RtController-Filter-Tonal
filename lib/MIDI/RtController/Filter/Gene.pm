@@ -21,6 +21,7 @@ use namespace::clean;
 
 =head1 SYNOPSIS
 
+  use curry;
   use MIDI::RtController ();
   use MIDI::RtController::Filter::Gene ();
 
@@ -28,7 +29,7 @@ use namespace::clean;
 
   my $rtf = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 
-  $rtc->add_filter('foo', note_on => $rtf->can('foo'));
+  $rtc->add_filter('pedal', note_on => $rtf->curry::pedal_tone);
 
   $rtc->run;
 
