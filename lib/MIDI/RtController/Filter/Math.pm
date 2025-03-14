@@ -132,7 +132,7 @@ Default: C<1>
 has down => (
     is  => 'rw',
     isa => Num,
-    default => sub { 1 },
+    default => sub { -1 },
 );
 
 =head1 METHODS
@@ -157,11 +157,11 @@ Notes are played from the event note, in up-down, stair-step fashion.
 =cut
 
 sub _stair_step_notes ($self, $note) {
-    my @notes = ($note);
+    my @notes;
     my $factor;
     for my $i (1 .. $self->feedback) {
         if ($i % 2 == 0) {
-            $factor = $i * -$self->down;
+            $factor = $i * $self->down;
         }
         else {
             $factor = $i * $self->up;
