@@ -8,7 +8,6 @@ use curry;
 use Future::IO::Impl::IOAsync;
 use MIDI::RtController ();
 use MIDI::RtController::Filter::Gene ();
-use MIDI::RtController::Filter::Math ();
 
 my $input_name  = shift || 'tempopad'; # midi controller device
 my $output_name = shift || 'fluid';    # fluidsynth
@@ -19,13 +18,8 @@ my $rtc = MIDI::RtController->new(
 );
 
 my $rtfg = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
-my $rtfm = MIDI::RtController::Filter::Math->new(rtc => $rtc);
 
-$rtfm->delay(0.2);
-$rtfm->feedback(3);
-
-# add_filters('pedal', $rtfg->curry::pedal_tone, 0);
-add_filters('stair', $rtfm->curry::stair_step, 0);
+add_filters('pedal', $rtfg->curry::pedal_tone, 0);
 
 $rtc->run;
 
