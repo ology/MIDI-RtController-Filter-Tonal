@@ -159,6 +159,7 @@ Notes are played from the event note, in up-down, stair-step fashion.
 sub _stair_step_notes ($self, $note) {
     my @notes;
     my $factor;
+    my $current = $note;
     for my $i (1 .. $self->feedback) {
         if ($i % 2 == 0) {
             $factor = $i * $self->down;
@@ -166,7 +167,8 @@ sub _stair_step_notes ($self, $note) {
         else {
             $factor = $i * $self->up;
         }
-        push @notes, $note + $factor;
+        $current += $factor;
+        push @notes, $current;
     }
     return @notes;
 }
