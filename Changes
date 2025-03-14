@@ -2,6 +2,7 @@ Revision history for MIDI-RtController-Filter-Gene
 
 {{$NEXT}}
   - Actually import Array::Circular. Thanks.
+  - Add the M::R::F::Math illustration package.
 
 0.0103 2025-03-13 15:04:15
   - Use Array::Circular.
