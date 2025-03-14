@@ -168,7 +168,7 @@ has offset => (
   $key = $rtf->key;
   $rtf->key($number);
 
-The MIDI number of the musical key.
+The musical key (C<C-B>).
 
 =cut
 
