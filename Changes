@@ -1,6 +1,8 @@
 Revision history for MIDI-RtController-Filter-Gene
 
 {{$NEXT}}
+
+0.0104 2025-03-13 20:32:17
   - Actually import Array::Circular. Thanks.
   - Add the M::R::F::Math illustration package.
   - Improve documentation.
