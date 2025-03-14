@@ -1,6 +1,8 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+
+0.0200 2025-03-14 08:53:24
   - Rename module from *::Gene to *::Tonal.
 
 0.0105 2025-03-13 21:15:35
