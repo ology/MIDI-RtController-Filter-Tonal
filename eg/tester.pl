@@ -5,7 +5,7 @@
 use curry;
 use Future::IO::Impl::IOAsync;
 use MIDI::RtController ();
-use MIDI::RtController::Filter::Gene ();
+use MIDI::RtController::Filter::Tonal ();
 
 my $input_name  = shift || 'tempopad'; # midi controller device
 my $output_name = shift || 'fluid';    # fluidsynth
@@ -15,8 +15,8 @@ my $rtc = MIDI::RtController->new(
     output => $output_name,
 );
 
-my $rtfg = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
+my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
-$rtc->add_filter('pedal', [qw(note_on note_off)], $rtfg->curry::pedal_tone);
+$rtc->add_filter('pedal', [qw(note_on note_off)], $rtf->curry::pedal_tone);
 
 $rtc->run;
