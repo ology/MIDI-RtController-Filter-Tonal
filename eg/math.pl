@@ -15,11 +15,11 @@ my $rtc = MIDI::RtController->new(
     output => $output_name,
 );
 
-my $rtfm = MIDI::RtController::Filter::Math->new(rtc => $rtc);
+my $rtf = MIDI::RtController::Filter::Math->new(rtc => $rtc);
 
-$rtfm->delay(0.15);
-$rtfm->feedback(6);
+$rtf->delay(0.15);
+$rtf->feedback(6);
 
-$rtc->add_filter('stair', [qw(note_on note_off)], $rtfm->curry::stair_step);
+$rtc->add_filter('stair', [qw(note_on note_off)], $rtf->curry::stair_step);
 
 $rtc->run;
