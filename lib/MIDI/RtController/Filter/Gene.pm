@@ -134,7 +134,7 @@ has velocity => (
   $feedback = $rtf->feedback;
   $rtf->feedback($number);
 
-The feedback (0-127).
+The feedback.
 
 Default: C<1>
 
