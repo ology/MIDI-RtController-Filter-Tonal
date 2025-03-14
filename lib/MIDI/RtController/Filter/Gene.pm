@@ -4,7 +4,7 @@ package MIDI::RtController::Filter::Gene;
 
 use v5.36;
 
-our $VERSION = '0.0103';
+our $VERSION = '0.0104';
 
 use Moo;
 use strictures 2;
