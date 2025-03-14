@@ -17,6 +17,6 @@ my $rtc = MIDI::RtController->new(
 
 my $rtfg = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 
-$rtc->add_filter('pedal', [qw(note_on note_off)], $rtfm->curry::pedal_tone);
+$rtc->add_filter('pedal', [qw(note_on note_off)], $rtfg->curry::pedal_tone);
 
 $rtc->run;
