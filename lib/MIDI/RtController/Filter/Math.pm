@@ -4,8 +4,6 @@ package MIDI::RtController::Filter::Math;
 
 use v5.36;
 
-our $VERSION = '0.0103';
-
 use Moo;
 use strictures 2;
 use Types::Standard qw(Num);
