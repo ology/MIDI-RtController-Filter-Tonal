@@ -4,7 +4,7 @@ use warnings;
 
 use Test::More;
 
-use_ok 'MIDI::RtController::Filter::Gene';
+use_ok 'MIDI::RtController::Filter::Tonal';
 
 # TODO
 
