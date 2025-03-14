@@ -19,8 +19,8 @@ my $rtc = MIDI::RtController->new(
 
 my $rtfm = MIDI::RtController::Filter::Math->new(rtc => $rtc);
 
-$rtfm->delay(0.2);
-$rtfm->feedback(3);
+$rtfm->delay(0.15);
+$rtfm->feedback(6);
 
 add_filters('stair', $rtfm->curry::stair_step, 0);
 
