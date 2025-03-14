@@ -22,11 +22,6 @@ my $rtfm = MIDI::RtController::Filter::Math->new(rtc => $rtc);
 $rtfm->delay(0.15);
 $rtfm->feedback(6);
 
-add_filters('stair', $rtfm->curry::stair_step, 0);
+$rtc->add_filter('stair', [qw(note_on note_off)], $rtfm->curry::stair_step);
 
 $rtc->run;
-
-sub add_filters ($name, $coderef, $types) {
-    $types ||= [qw(note_on note_off)];
-    $rtc->add_filter($name, $types, $coderef);
-}
