@@ -1,10 +1,10 @@
-package MIDI::RtController::Filter::Gene;
+package MIDI::RtController::Filter::Tonal;
 
-# ABSTRACT: Gene's RtController filters
+# ABSTRACT: Tonal RtController filters
 
 use v5.36;
 
-our $VERSION = '0.0105';
+our $VERSION = '0.0200';
 
 use Moo;
 use strictures 2;
@@ -25,11 +25,11 @@ use namespace::clean;
   use curry;
   use Future::IO::Impl::IOAsync;
   use MIDI::RtController ();
-  use MIDI::RtController::Filter::Gene ();
+  use MIDI::RtController::Filter::Tonal ();
 
   my $rtc = MIDI::RtController->new; # * input/output required
 
-  my $rtf = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
+  my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
   $rtc->add_filter('pedal', note_on => $rtf->curry::pedal_tone);
 
@@ -37,7 +37,7 @@ use namespace::clean;
 
 =head1 DESCRIPTION
 
-C<MIDI::RtController::Filter::Gene> is the collection of Gene's
+C<MIDI::RtController::Filter::Tonal> is the collection of tonal
 L<MIDI::RtController> filters.
 
 =cut
