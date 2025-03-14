@@ -8,6 +8,7 @@ our $VERSION = '0.0103';
 
 use Moo;
 use strictures 2;
+use Array::Circular ();
 use List::SomeUtils qw(first_index);
 use List::Util qw(shuffle uniq);
 use MIDI::RtMidi::ScorePlayer ();
