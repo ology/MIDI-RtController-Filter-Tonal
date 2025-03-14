@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# PERL_FUTURE_DEBUG=1 perl eg/tester.pl
+# PERL_FUTURE_DEBUG=1 perl eg/math.pl
 
 use v5.36;
 
