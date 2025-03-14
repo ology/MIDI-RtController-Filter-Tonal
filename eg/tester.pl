@@ -21,7 +21,10 @@ my $rtc = MIDI::RtController->new(
 my $rtfg = MIDI::RtController::Filter::Gene->new(rtc => $rtc);
 my $rtfm = MIDI::RtController::Filter::Math->new(rtc => $rtc);
 
-add_filters('pedal', $rtfg->curry::pedal_tone, 0);
+$rtfm->delay(0.2);
+$rtfm->feedback(4);
+
+# add_filters('pedal', $rtfg->curry::pedal_tone, 0);
 add_filters('stair', $rtfm->curry::stair_step, 0);
 
 $rtc->run;
