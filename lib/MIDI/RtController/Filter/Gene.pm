@@ -438,7 +438,7 @@ __END__
 
 =head1 SEE ALSO
 
-The F<g/*.pl> program(s)
+The F<eg/*.pl> program(s)
 
 L<List::SomeUtils>
 
