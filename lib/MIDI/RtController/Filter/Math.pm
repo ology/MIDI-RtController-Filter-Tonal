@@ -125,7 +125,7 @@ has up => (
 
 The downward movement steps.
 
-Default: C<1>
+Default: C<-1>
 
 =cut
 
@@ -162,7 +162,7 @@ sub _stair_step_notes ($self, $note) {
     my $current = $note;
     for my $i (1 .. $self->feedback) {
         if ($i % 2 == 0) {
-            $factor = $i * $self->down;
+            $factor = ($i - 1) * $self->down;
         }
         else {
             $factor = $i * $self->up;
