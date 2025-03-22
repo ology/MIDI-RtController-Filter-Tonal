@@ -135,10 +135,10 @@ has down => (
 
 =head1 METHODS
 
-All filter methods must accept the object, a delta-time, and a MIDI
-event ARRAY reference, like:
+All filter methods must accept the object, a MIDI device name, a
+delta-time, and a MIDI event ARRAY reference, like:
 
-  sub stair_step ($self, $dt, $event) {
+  sub stair_step ($self, $device, $delta, $event) {
     my ($event_type, $chan, $note, $value) = $event->@*;
     ...
     return $boolean;
@@ -171,7 +171,7 @@ sub _stair_step_notes ($self, $note) {
     return @notes;
 }
 
-sub stair_step ($self, $dt, $event) {
+sub stair_step ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $vel) = $event->@*;
     my @notes = $self->_stair_step_notes($note);
     my $delay_time = 0;
