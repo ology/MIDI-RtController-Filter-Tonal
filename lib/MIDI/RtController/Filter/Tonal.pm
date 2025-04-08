@@ -92,7 +92,7 @@ Default: C<0>
 
 has channel => (
     is  => 'rw',
-    isa => Num,
+    isa => Channel,
     default => sub { 0 },
 );
 
