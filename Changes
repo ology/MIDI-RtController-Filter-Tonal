@@ -1,6 +1,8 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+  - Improve documentation.
+  - Use Types::MIDI.
 
 0.0201 2025-03-22 14:34:26
   - Refactor for the fresh RtController.
