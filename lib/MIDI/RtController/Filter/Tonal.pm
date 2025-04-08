@@ -6,12 +6,12 @@ use v5.36;
 
 our $VERSION = '0.0201';
 
-use Moo;
 use strictures 2;
 use Array::Circular ();
 use List::SomeUtils qw(first_index);
 use List::Util qw(shuffle uniq);
 use MIDI::RtMidi::ScorePlayer ();
+use Moo;
 use Music::Scales qw(get_scale_MIDI get_scale_notes);
 use Music::Chord::Note ();
 use Music::Note ();
