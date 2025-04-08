@@ -17,6 +17,7 @@ use Music::Chord::Note ();
 use Music::Note ();
 use Music::ToRoman ();
 use Music::VoiceGen ();
+use Types::MIDI qw(Channel);
 use Types::Standard qw(ArrayRef Num Str);
 use namespace::clean;
 
@@ -29,9 +30,9 @@ use namespace::clean;
 
   my $rtc = MIDI::RtController->new; # * input/output required
 
-  my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
+  my $filter = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
-  $rtc->add_filter('pedal', note_on => $rtf->curry::pedal_tone);
+  $rtc->add_filter('pedal', note_on => $filter->curry::pedal_tone);
 
   $rtc->run;
 
@@ -46,7 +47,7 @@ L<MIDI::RtController> filters.
 
 =head2 rtc
 
-  $rtc = $rtf->rtc;
+  $rtc = $filter->rtc;
 
 The required L<MIDI::RtController> instance provided in the
 constructor.
@@ -61,8 +62,8 @@ has rtc => (
 
 =head2 pedal
 
-  $pedal = $rtf->pedal;
-  $rtf->pedal($note);
+  $pedal = $filter->pedal;
+  $filter->pedal($note);
 
 The B<note> used by the pedal-tone filter.
 
@@ -80,8 +81,8 @@ has pedal => (
 
 =head2 channel
 
-  $channel = $rtf->channel;
-  $rtf->channel($number);
+  $channel = $filter->channel;
+  $filter->channel($number);
 
 The current MIDI channel (0-15, drums=9).
 
@@ -97,8 +98,8 @@ has channel => (
 
 =head2 delay
 
-  $delay = $rtf->delay;
-  $rtf->delay($number);
+  $delay = $filter->delay;
+  $filter->delay($number);
 
 The current delay time.
 
@@ -114,8 +115,8 @@ has delay => (
 
 =head2 velocity
 
-  $velocity = $rtf->velocity;
-  $rtf->velocity($number);
+  $velocity = $filter->velocity;
+  $filter->velocity($number);
 
 The velocity (or volume) change increment (0-127).
 
@@ -131,8 +132,8 @@ has velocity => (
 
 =head2 feedback
 
-  $feedback = $rtf->feedback;
-  $rtf->feedback($number);
+  $feedback = $filter->feedback;
+  $filter->feedback($number);
 
 The feedback.
 
@@ -148,8 +149,8 @@ has feedback => (
 
 =head2 offset
 
-  $offset = $rtf->offset;
-  $rtf->offset($number);
+  $offset = $filter->offset;
+  $filter->offset($number);
 
 The note offset number.
 
@@ -165,8 +166,8 @@ has offset => (
 
 =head2 key
 
-  $key = $rtf->key;
-  $rtf->key($number);
+  $key = $filter->key;
+  $filter->key($number);
 
 The musical key (C<C-B>).
 
@@ -180,8 +181,8 @@ has key => (
 
 =head2 scale
 
-  $scale = $rtf->scale;
-  $rtf->scale($name);
+  $scale = $filter->scale;
+  $filter->scale($name);
 
 The name of the musical scale.
 
@@ -195,8 +196,8 @@ has scale => (
 
 =head2 intervals
 
-  $intervals = $rtf->intervals;
-  $rtf->intervals(\@intervals);
+  $intervals = $filter->intervals;
+  $filter->intervals(\@intervals);
 
 The voice intervals used by L<Music::VoiceGen> and the C<chord_tone>
 filter.
@@ -211,8 +212,8 @@ has intervals => (
 
 =head2 arp
 
-  $arp = $rtf->arp;
-  $rtf->arp(\@notes);
+  $arp = $filter->arp;
+  $filter->arp(\@notes);
 
 The list of MIDI numbered pitches used by the C<arp_tone> filter.
 
@@ -226,8 +227,8 @@ has arp => (
 
 =head2 arp_types
 
-  $arp_types = $rtf->arp_types;
-  $rtf->arp_types(\@strings);
+  $arp_types = $filter->arp_types;
+  $filter->arp_types(\@strings);
 
 A list of known arpeggiation types. This is an L<Array::Circular>
 instance.
@@ -244,8 +245,8 @@ has arp_types => (
 
 =head2 arp_type
 
-  $arp_type = $rtf->arp_type;
-  $rtf->arp_type($string);
+  $arp_type = $filter->arp_type;
+  $filter->arp_type($string);
 
 The current arpeggiation type.
 
