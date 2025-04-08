@@ -6,7 +6,7 @@ use v5.36;
 
 use strictures 2;
 use Moo;
-use Types::MIDI qw(channel);
+use Types::MIDI qw(Channel);
 use Types::Standard qw(Num);
 use namespace::clean;
 
