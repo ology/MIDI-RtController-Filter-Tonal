@@ -441,6 +441,8 @@ __END__
 
 The F<eg/*.pl> program(s)
 
+L<Array::Circular>
+
 L<List::SomeUtils>
 
 L<List::Util>
@@ -458,6 +460,8 @@ L<Music::Note>
 L<Music::ToRoman>
 
 L<Music::VoiceGen>
+
+L<Types::MIDI>
 
 L<Types::Standard>
 
