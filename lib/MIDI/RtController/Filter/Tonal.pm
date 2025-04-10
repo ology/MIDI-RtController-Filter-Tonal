@@ -28,7 +28,10 @@ use namespace::clean;
   use MIDI::RtController ();
   use MIDI::RtController::Filter::Tonal ();
 
-  my $rtc = MIDI::RtController->new; # * input/output required
+  my $rtc = MIDI::RtController->new(
+    input  => 'keyboard',
+    output => 'usb',
+  );
 
   my $filter = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
@@ -439,7 +442,13 @@ __END__
 
 =head1 SEE ALSO
 
-The F<eg/*.pl> program(s)
+The F<eg/*.pl> program(s) in this distribution
+
+L<MIDI::RtController::Filter::Drums>
+
+L<MIDI::RtController::Filter::Math>
+
+L<MIDI::RtController::Filter::CC>
 
 L<Array::Circular>
 
