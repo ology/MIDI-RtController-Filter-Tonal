@@ -279,9 +279,11 @@ not.
 
 =head2 pedal_tone
 
-  pedal, $note, $note + 7
+Play a series of notes in succession by B<delay>.
 
-Where the B<pedal> is the object attribute.
+Default: C<pedal, $note, $note + 7 semitones>
+
+Where B<pedal> is the object attribute.
 
 =cut
 
