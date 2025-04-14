@@ -334,8 +334,8 @@ sub _pedal_notes ($self, $note) {
 }
 sub pedal_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_pedal_notes($note);
     my $delay_time = 0;
@@ -373,8 +373,8 @@ sub _chord_notes ($self, $note) {
 }
 sub chord_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_chord_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $val ]) for @notes;
@@ -397,8 +397,8 @@ sub _delay_notes ($self, $note) {
 }
 sub delay_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_delay_notes($note);
     my $delay_time = 0;
@@ -427,8 +427,8 @@ sub _offset_notes ($self, $note) {
 }
 sub offset_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_offset_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $val ]) for @notes;
@@ -460,8 +460,8 @@ sub _walk_notes ($self, $note) {
 }
 sub walk_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_walk_notes($note);
     my $delay_time = 0;
@@ -484,7 +484,7 @@ should be applied.
 =cut
 
 sub _arp_notes ($self, $note) {
-    $self->feedback(2) if $self->feedback < 2;;
+    $self->feedback(2) if $self->feedback < 2;
     my @tmp = $self->arp->@*;
     if (@tmp >= 2 * $self->feedback) { # double, on/off note event
         shift @tmp;
@@ -506,8 +506,8 @@ sub _arp_notes ($self, $note) {
 }
 sub arp_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_arp_notes($note);
     my $delay_time = 0;
