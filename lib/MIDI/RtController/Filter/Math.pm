@@ -221,8 +221,8 @@ sub _stair_step_notes ($self, $note) {
 
 sub stair_step ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if $self->trigger && $note != $self->trigger;
-    return 0 if $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
 
     my @notes = $self->_stair_step_notes($note);
     my $delay_time = 0;
