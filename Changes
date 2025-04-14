@@ -1,6 +1,7 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+  - Add the trigger and value attributes.
 
 0.0204 2025-04-10 01:16:06
   - Improve documentation.
