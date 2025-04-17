@@ -1,4 +1,6 @@
 #!/usr/bin/env perl
+use strict;
+use warnings;
 
 # PERL_FUTURE_DEBUG=1 perl eg/tester.pl
 
@@ -9,6 +11,7 @@ use MIDI::RtController::Filter::Tonal ();
 
 my $input_name  = shift || 'tempopad'; # midi controller device
 my $output_name = shift || 'fluid';    # fluidsynth
+my $filter_name = shift || 'pedal_tone';
 
 my $rtc = MIDI::RtController->new(
     input  => $input_name,
@@ -18,6 +21,7 @@ my $rtc = MIDI::RtController->new(
 
 my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
-$rtc->add_filter('pedal_tone', [qw(note_on note_off)], $rtf->curry::pedal_tone);
+my $method = "curry::$filter_name";
+$rtc->add_filter($filter_name, [qw(note_on note_off)], $rtf->$method);
 
 $rtc->run;
