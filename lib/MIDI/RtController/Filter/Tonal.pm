@@ -239,8 +239,7 @@ has scale => (
   $intervals = $filter->intervals;
   $filter->intervals(\@intervals);
 
-The voice intervals used by L<Music::VoiceGen> and the C<chord_tone>
-filter.
+The voice intervals used by the C<walk_tone> filter.
 
 =cut
 
