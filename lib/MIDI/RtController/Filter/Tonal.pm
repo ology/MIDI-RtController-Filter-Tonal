@@ -254,7 +254,8 @@ has intervals => (
   $arp = $filter->arp;
   $filter->arp(\@notes);
 
-The list of MIDI numbered pitches used by the C<arp_tone> filter.
+A list of MIDI numbered pitches used by the C<arp_tone> and
+C<walk_tone> filters.
 
 =cut
 
@@ -455,16 +456,25 @@ sub _walk_notes ($self, $note) {
         pitches   => \@pitches,
         intervals => $self->intervals,
     );
-    return map { $voice->rand } 1 .. $self->feedback;
+    my @notes = map { $voice->rand } 1 .. $self->feedback;
+    return @notes;
 }
 sub walk_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
     return 0 if defined $self->trigger && $note != $self->trigger;
     return 0 if defined $self->value && $val != $self->value;
 
-    my @notes = $self->_walk_notes($note);
+    my $notes = $self->arp;
+    if (@$notes) {
+        $self->arp([]);
+    }
+    else {
+        @$notes = $self->_walk_notes($note);
+        $self->arp($notes);
+    }
+
     my $delay_time = 0;
-    for my $n (@notes) {
+    for my $n (@$notes) {
         $delay_time += $self->delay;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
     }
