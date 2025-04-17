@@ -464,6 +464,7 @@ sub walk_tone ($self, $device, $dt, $event) {
     return 0 if defined $self->trigger && $note != $self->trigger;
     return 0 if defined $self->value && $val != $self->value;
 
+    # make sure the note_on and note_off notes are the same
     my $notes = $self->arp;
     if (@$notes) {
         $self->arp([]);
