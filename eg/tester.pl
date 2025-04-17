@@ -13,10 +13,11 @@ my $output_name = shift || 'fluid';    # fluidsynth
 my $rtc = MIDI::RtController->new(
     input  => $input_name,
     output => $output_name,
+    verbose => 1,
 );
 
 my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
-$rtc->add_filter('pedal', [qw(note_on note_off)], $rtf->curry::pedal_tone);
+$rtc->add_filter('pedal_tone', [qw(note_on note_off)], $rtf->curry::pedal_tone);
 
 $rtc->run;
