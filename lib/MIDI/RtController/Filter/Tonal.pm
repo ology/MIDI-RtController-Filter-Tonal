@@ -7,6 +7,7 @@ use v5.36;
 our $VERSION = '0.0304';
 
 use strictures 2;
+use curry;
 use Array::Circular ();
 use List::SomeUtils qw(first_index);
 use List::Util qw(shuffle uniq);
@@ -355,7 +356,7 @@ sub add_filters ($filters, $controllers) {
         my $port = delete $params->{port};
         # skip unnamed and unknown entries
         next if !$port || !exists $controllers->{$port};
-        my $type   = delete $params->{type} || 'single';
+        my $type   = delete $params->{type}  || 'delay_tone';
         my $event  = delete $params->{event} || 'all';
         my $filter = __PACKAGE__->new(
             rtc => $controllers->{$port}
