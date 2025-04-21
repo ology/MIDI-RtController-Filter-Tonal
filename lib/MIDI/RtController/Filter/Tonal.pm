@@ -4,7 +4,7 @@ package MIDI::RtController::Filter::Tonal;
 
 use v5.36;
 
-our $VERSION = '0.0303';
+our $VERSION = '0.0304';
 
 use strictures 2;
 use Array::Circular ();
