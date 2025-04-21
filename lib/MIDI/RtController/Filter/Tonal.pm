@@ -320,6 +320,57 @@ has arp_type => (
 
 =head1 METHODS
 
+=head2 new
+
+  $filter = MIDI::RtController::Filter::CC->new(%arguments);
+
+Return a new C<MIDI::RtController::Filter::CC> object.
+
+=head1 UTILITIES
+
+=head2 add_filters
+
+  MIDI::RtController::Filter::Tonal::add_filters(\@filters, $controllers);
+
+Add an array reference of B<filters> to controller instances. For
+example:
+
+  [
+    {   port => 'keyboard',
+        event => [qw(note_on note_off)],
+        type => 'delay_tone',
+        delay => 0.15,
+    },
+    ...
+  ]
+
+In this list, C<port> is required, and C<event> is optional. These
+keys are metadata, and all others are assumed to be object attributes
+to set.
+
+=cut
+
+sub add_filters ($filters, $controllers) {
+    for my $params (@$filters) {
+        my $port = delete $params->{port};
+        # skip unnamed and unknown entries
+        next if !$port || !exists $controllers->{$port};
+        my $type   = delete $params->{type} || 'single';
+        my $event  = delete $params->{event} || 'all';
+        my $filter = __PACKAGE__->new(
+            rtc => $controllers->{$port}
+        );
+        # assume all remaining key/values are module attributes
+        for my $param (keys %$params) {
+            $filter->$param($params->{$param});
+        }
+        my $method = "curry::$type";
+        $controllers->{$port}->add_filter($type, $event => $filter->$method);
+    }
+}
+
+=head1 FILTERS
+
 All filter methods must accept the object, a MIDI device name, a
 delta-time, and a MIDI event ARRAY reference, like:
 
