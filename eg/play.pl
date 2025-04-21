@@ -42,6 +42,6 @@ $rtc->loop->add(
     )->start
 );
 
-$SIG{'INT'} = $SIG{'TERM'} = sub { $rtc->send_it([note_off => 0, 60, 100]); exit 0; };
+$SIG{INT} = $SIG{TERM} = sub { $rtc->send_it([note_off => 0, 60, 100]); exit 0 };
 
 $rtc->run;
