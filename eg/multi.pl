@@ -47,7 +47,6 @@ sub get_filters {
             event => [qw(note_on note_off)],
             type => 'pedal_tone',
             delay => 0.25,
-            feedback => 4,
         },
     );
 }
