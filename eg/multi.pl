@@ -4,7 +4,7 @@ use MIDI::RtController ();
 use MIDI::RtController::Filter::Tonal ();
 use Object::Destroyer ();
 
-my $input_names = shift || 'keyboard'; # CSV midi controller devices
+my $input_names = shift || 'keyboard,pad'; # CSV midi controller devices
 my $output_name = shift || 'usb'; # midi output device
 my $populate    = shift || 0; # use the 1st input for the filter port
 
