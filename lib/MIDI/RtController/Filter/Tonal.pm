@@ -408,6 +408,9 @@ If B<trigger> or B<value> is set, the filter checks those against the
 MIDI event C<note> or C<value>, respectively, to see if the filter
 should be applied.
 
+If the B<factor> attribute is set, this is multiplied by the delay
+time before being sent to a MIDI output.
+
 =cut
 
 sub _delay_notes ($self, $note) {
