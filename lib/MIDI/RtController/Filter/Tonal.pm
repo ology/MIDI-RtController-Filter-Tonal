@@ -78,7 +78,7 @@ Which is the MIDI-number for G below middle-C.
 has pedal => (
     is  => 'rw',
     isa => Num,
-    default => sub { 55 },
+    default => 55,
 );
 
 =head2 channel
@@ -95,7 +95,7 @@ Default: C<0>
 has channel => (
     is  => 'rw',
     isa => Channel,
-    default => sub { 0 },
+    default => 0,
 );
 
 =head2 value
@@ -150,7 +150,24 @@ Default: C<0.1> seconds
 has delay => (
     is  => 'rw',
     isa => Num,
-    default => sub { 0.1 },
+    default => 0.1,
+);
+
+=head2 factor
+
+  $factor = $filter->factor;
+  $filter->factor($number);
+
+This is a generic number that can be used in a calculation.
+
+Default: C<undef>
+
+=cut
+
+has factor => (
+    is  => 'rw',
+    isa => Maybe[Num],
+    default => undef,
 );
 
 =head2 velocity
@@ -167,7 +184,7 @@ Default: C<10>
 has velocity => (
     is  => 'rw',
     isa => Num,
-    default => sub { 10 },
+    default => 10,
 );
 
 =head2 feedback
@@ -184,7 +201,7 @@ Default: C<1>
 has feedback => (
     is  => 'rw',
     isa => Num,
-    default => sub { 1 },
+    default => 1,
 );
 
 =head2 offset
@@ -201,7 +218,7 @@ Default: C<-12>
 has offset => (
     is  => 'rw',
     isa => Num,
-    default => sub { -12 },
+    default => -12,
 );
 
 =head2 key
@@ -216,7 +233,7 @@ The musical key (C<C-B>).
 has key => (
     is  => 'rw',
     isa => Str,
-    default => sub { 'C' },
+    default => 'C',
 );
 
 =head2 scale
@@ -231,7 +248,7 @@ The name of the musical scale.
 has scale => (
     is  => 'rw',
     isa => Str,
-    default => sub { 'major' },
+    default => 'major',
 );
 
 =head2 intervals
@@ -246,7 +263,7 @@ The voice intervals used by the C<walk_tone> filter.
 has intervals => (
     is  => 'rw',
     isa => ArrayRef[Num],
-    default => sub { [qw(-3 -2 -1 1 2 3)] },
+    default => [qw(-3 -2 -1 1 2 3)],
 );
 
 =head2 arp
@@ -262,7 +279,7 @@ C<walk_tone> filters.
 has arp => (
     is  => 'rw',
     isa => ArrayRef[Num],
-    default => sub { [] },
+    default => [],
 );
 
 =head2 arp_types
@@ -280,7 +297,7 @@ Default: C<[up, down, random]>
 has arp_types => (
     is  => 'rw',
     isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'Array::Circular' },
-    default => sub { Array::Circular->new(qw(up down random)) },
+    default => Array::Circular->new(qw(up down random)),
 );
 
 =head2 arp_type
@@ -297,7 +314,7 @@ Default: C<up>
 has arp_type => (
     is  => 'rw',
     isa => Str,
-    default => sub { 'up' },
+    default => 'up',
 );
 
 =head1 METHODS
@@ -404,6 +421,7 @@ sub delay_tone ($self, $device, $dt, $event) {
     my $delay_time = 0;
     for my $n (@notes) {
         $delay_time += $self->delay;
+        $delay_time *= $self->factor if defined $self->factor;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
         $val -= $self->velocity;
     }
