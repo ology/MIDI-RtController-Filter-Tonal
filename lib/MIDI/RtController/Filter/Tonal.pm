@@ -345,6 +345,9 @@ If B<trigger> or B<value> is set, the filter checks those against the
 MIDI event C<note> or C<value>, respectively, to see if the filter
 should be applied.
 
+If the B<factor> attribute is set, this is multiplied by the delay
+time before being sent to a MIDI output.
+
 =cut
 
 sub _pedal_notes ($self, $note) {
@@ -359,6 +362,7 @@ sub pedal_tone ($self, $device, $dt, $event) {
     my $delay_time = 0;
     for my $n (@notes) {
         $delay_time += $self->delay;
+        $delay_time *= $self->factor if defined $self->factor;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
     }
     return 0;
@@ -466,6 +470,9 @@ If B<trigger> or B<value> is set, the filter checks those against the
 MIDI event C<note> or C<value>, respectively, to see if the filter
 should be applied.
 
+If the B<factor> attribute is set, this is multiplied by the delay
+time before being sent to a MIDI output.
+
 =cut
 
 sub _walk_notes ($self, $note) {
@@ -499,6 +506,7 @@ sub walk_tone ($self, $device, $dt, $event) {
     my $delay_time = 0;
     for my $n (@$notes) {
         $delay_time += $self->delay;
+        $delay_time *= $self->factor if defined $self->factor;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
     }
     return 0;
@@ -512,6 +520,9 @@ setting.
 If B<trigger> or B<value> is set, the filter checks those against the
 MIDI event C<note> or C<value>, respectively, to see if the filter
 should be applied.
+
+If the B<factor> attribute is set, this is multiplied by the delay
+time before being sent to a MIDI output.
 
 =cut
 
@@ -546,6 +557,7 @@ sub arp_tone ($self, $device, $dt, $event) {
     for my $n (@notes) {
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
         $delay_time += $self->delay;
+        $delay_time *= $self->factor if defined $self->factor;
     }
     return 1;
 }
