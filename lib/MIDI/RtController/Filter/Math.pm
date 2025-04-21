@@ -68,7 +68,7 @@ Default: C<0>
 has channel => (
     is  => 'rw',
     isa => Channel,
-    default => 0,
+    default => sub { 0 },
 );
 
 =head2 value
@@ -121,9 +121,9 @@ Default: C<0.1> seconds
 =cut
 
 has delay => (
-    is      => 'rw',
-    isa     => Num,
-    default => 0.1,
+    is  => 'rw',
+    isa => Num,
+    default => sub { 0.1 },
 );
 
 =head2 feedback
@@ -138,9 +138,9 @@ Default: C<3>
 =cut
 
 has feedback => (
-    is      => 'rw',
-    isa     => Num,
-    default => 1,
+    is  => 'rw',
+    isa => Num,
+    default => sub { 1 },
 );
 
 =head2 up
@@ -155,9 +155,9 @@ Default: C<2>
 =cut
 
 has up => (
-    is      => 'rw',
-    isa     => Num,
-    default => 2,
+    is  => 'rw',
+    isa => Num,
+    default => sub { 2 },
 );
 
 =head2 down
@@ -172,9 +172,9 @@ Default: C<-1>
 =cut
 
 has down => (
-    is      => 'rw',
-    isa     => Num,
-    default => -1,
+    is  => 'rw',
+    isa => Num,
+    default => sub { -1 },
 );
 
 =head1 METHODS
