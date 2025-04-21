@@ -158,7 +158,8 @@ has delay => (
   $factor = $filter->factor;
   $filter->factor($number);
 
-This is a generic number that can be used in a calculation.
+This is a generic number that can be used in a calculation, like the
+L</delay_tone> filter.
 
 Default: C<undef>
 
