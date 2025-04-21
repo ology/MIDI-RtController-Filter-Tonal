@@ -49,8 +49,8 @@ constructor.
 =cut
 
 has rtc => (
-    is  => 'ro',
-    isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'MIDI::RtController' },
+    is       => 'ro',
+    isa      => sub { die 'Invalid rtc' unless ref($_[0]) eq 'MIDI::RtController' },
     required => 1,
 );
 
@@ -66,8 +66,8 @@ Default: C<0>
 =cut
 
 has channel => (
-    is  => 'rw',
-    isa => Channel,
+    is      => 'rw',
+    isa     => Channel,
     default => sub { 0 },
 );
 
@@ -121,8 +121,8 @@ Default: C<0.1> seconds
 =cut
 
 has delay => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => sub { 0.1 },
 );
 
@@ -138,8 +138,8 @@ Default: C<3>
 =cut
 
 has feedback => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => sub { 1 },
 );
 
@@ -155,8 +155,8 @@ Default: C<2>
 =cut
 
 has up => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => sub { 2 },
 );
 
@@ -172,8 +172,8 @@ Default: C<-1>
 =cut
 
 has down => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => sub { -1 },
 );
 
