@@ -121,8 +121,8 @@ Default: C<0.1> seconds
 =cut
 
 has delay => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => 0.1,
 );
 
@@ -138,8 +138,8 @@ Default: C<3>
 =cut
 
 has feedback => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => 1,
 );
 
@@ -155,8 +155,8 @@ Default: C<2>
 =cut
 
 has up => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => 2,
 );
 
@@ -172,8 +172,8 @@ Default: C<-1>
 =cut
 
 has down => (
-    is  => 'rw',
-    isa => Num,
+    is      => 'rw',
+    isa     => Num,
     default => -1,
 );
 
