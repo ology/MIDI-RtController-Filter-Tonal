@@ -1,6 +1,8 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+
+0.0303 2025-04-20 18:10:04
   - Add the factor attribute and use it in the delay filter.
 
 0.0302 2025-04-17 01:15:56
