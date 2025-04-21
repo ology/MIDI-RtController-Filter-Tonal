@@ -78,7 +78,7 @@ Which is the MIDI-number for G below middle-C.
 has pedal => (
     is  => 'rw',
     isa => Num,
-    default => 55,
+    default => sub { 55 },
 );
 
 =head2 channel
@@ -95,7 +95,7 @@ Default: C<0>
 has channel => (
     is  => 'rw',
     isa => Channel,
-    default => 0,
+    default => sub { 0 },
 );
 
 =head2 value
@@ -114,7 +114,7 @@ Default: C<undef>
 has value => (
     is      => 'rw',
     isa     => Maybe[Num],
-    default => undef,
+    default => sub { undef },
 );
 
 =head2 trigger
@@ -133,7 +133,7 @@ Default: C<undef>
 has trigger => (
     is      => 'rw',
     isa     => Maybe[Num],
-    default => undef,
+    default => sub { undef },
 );
 
 =head2 delay
@@ -150,7 +150,7 @@ Default: C<0.1> seconds
 has delay => (
     is  => 'rw',
     isa => Num,
-    default => 0.1,
+    default => sub { 0.1 },
 );
 
 =head2 factor
@@ -167,7 +167,7 @@ Default: C<undef>
 has factor => (
     is  => 'rw',
     isa => Maybe[Num],
-    default => undef,
+    default => sub { undef },
 );
 
 =head2 velocity
@@ -184,7 +184,7 @@ Default: C<10>
 has velocity => (
     is  => 'rw',
     isa => Num,
-    default => 10,
+    default => sub { 10 },
 );
 
 =head2 feedback
@@ -201,7 +201,7 @@ Default: C<1>
 has feedback => (
     is  => 'rw',
     isa => Num,
-    default => 1,
+    default => sub { 1 },
 );
 
 =head2 offset
@@ -218,7 +218,7 @@ Default: C<-12>
 has offset => (
     is  => 'rw',
     isa => Num,
-    default => -12,
+    default => sub { -12 },
 );
 
 =head2 key
@@ -233,7 +233,7 @@ The musical key (C<C-B>).
 has key => (
     is  => 'rw',
     isa => Str,
-    default => 'C',
+    default => sub { 'C' },
 );
 
 =head2 scale
@@ -248,7 +248,7 @@ The name of the musical scale.
 has scale => (
     is  => 'rw',
     isa => Str,
-    default => 'major',
+    default => sub { 'major' },
 );
 
 =head2 intervals
@@ -263,7 +263,7 @@ The voice intervals used by the C<walk_tone> filter.
 has intervals => (
     is  => 'rw',
     isa => ArrayRef[Num],
-    default => [qw(-3 -2 -1 1 2 3)],
+    default => sub { [qw(-3 -2 -1 1 2 3)] },
 );
 
 =head2 arp
@@ -279,7 +279,7 @@ C<walk_tone> filters.
 has arp => (
     is  => 'rw',
     isa => ArrayRef[Num],
-    default => [],
+    default => sub { [] },
 );
 
 =head2 arp_types
@@ -297,7 +297,7 @@ Default: C<[up, down, random]>
 has arp_types => (
     is  => 'rw',
     isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'Array::Circular' },
-    default => Array::Circular->new(qw(up down random)),
+    default => sub { Array::Circular->new(qw(up down random)) },
 );
 
 =head2 arp_type
@@ -314,7 +314,7 @@ Default: C<up>
 has arp_type => (
     is  => 'rw',
     isa => Str,
-    default => 'up',
+    default => sub { 'up' },
 );
 
 =head1 METHODS
