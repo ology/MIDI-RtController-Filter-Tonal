@@ -1,6 +1,7 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+  - Add the eg/play.pl program to illustrate direct calling.
 
 0.0305 2025-04-21 00:56:13
   - Enhance the eg/tester.pl program.
