@@ -3,8 +3,6 @@ use strict;
 use warnings;
 
 use curry;
-use Future::IO::Impl::IOAsync;
-use IO::Async::Timer::Periodic;
 use MIDI::RtController ();
 use MIDI::RtController::Filter::Tonal ();
 use Time::HiRes qw(usleep);
