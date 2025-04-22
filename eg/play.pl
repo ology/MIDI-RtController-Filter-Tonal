@@ -30,17 +30,9 @@ $rtf->delay(0.15);
 my $method = "curry::$filter_name";
 $rtc->add_filter($filter_name, [qw(note_on note_off)], $rtf->$method);
 
-$rtc->loop->add(
-    IO::Async::Timer::Periodic->new(
-        interval => 1,
-        reschedule => 'hard',
-        on_tick => sub {
-            $rtc->send_it(['note_on', $rtf->channel, 60, 100]);
-            usleep(500_000);
-            $rtc->send_it(['note_off', $rtf->channel, 60, 100]);
-        },
-    )->start
-);
+$rtf->$filter_name('system', 0, ['note_on', $rtf->channel, 60, 100]);
+usleep(500_000);
+$rtf->$filter_name('system', 0, ['note_off', $rtf->channel, 60, 100]);
 
 $SIG{INT} = $SIG{TERM} = sub { $rtc->send_it([note_off => 0, 60, 100]); exit 0 };
 
