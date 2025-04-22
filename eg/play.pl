@@ -33,6 +33,4 @@ $rtf->$filter_name('system', 0, ['note_on', $rtf->channel, 60, 100]);
 usleep($micros);
 $rtf->$filter_name('system', 0, ['note_off', $rtf->channel, 60, 100]);
 
-$SIG{INT} = $SIG{TERM} = sub { $rtc->send_it([note_off => 0, 60, 100]); exit 0 };
-
 $rtc->run;
