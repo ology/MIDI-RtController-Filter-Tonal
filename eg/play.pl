@@ -9,7 +9,7 @@ use Time::HiRes qw(usleep);
 
 my $input_name  = shift || 'tempopad'; # midi controller device
 my $output_name = shift || 'fluid';    # fluidsynth
-my $filter_name = shift || 'pedal_tone';
+my $filter_name = shift || 'walk_tone';
 
 my $rtc = MIDI::RtController->new(
     input  => $input_name,
@@ -21,7 +21,7 @@ my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
 $rtc->send_it(['patch_change', $rtf->channel, 2]);
 
-$rtf->feedback(8);
+$rtf->feedback(16);
 $rtf->delay(0.5);
 # $rtf->factor(1.5);
 
