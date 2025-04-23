@@ -4,7 +4,7 @@ package MIDI::RtController::Filter::Tonal;
 
 use v5.36;
 
-our $VERSION = '0.0305';
+our $VERSION = '0.0306';
 
 use strictures 2;
 use curry;
