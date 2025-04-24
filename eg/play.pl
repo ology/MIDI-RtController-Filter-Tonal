@@ -21,7 +21,7 @@ my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
 
 $rtc->send_it(['patch_change', $rtf->channel, 2]);
 
-$rtf->feedback(16);
+$rtf->feedback(4);
 $rtf->delay(0.5);
 # $rtf->factor(1.5);
 
