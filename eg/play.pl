@@ -28,9 +28,9 @@ $rtf->delay(0.5);
 my $method = "curry::$filter_name";
 $rtc->add_filter($filter_name, [qw(note_on note_off)], $rtf->$method);
 
-my $micros = 500_000;
-$rtf->$filter_name('system', 0, ['note_on', $rtf->channel, 60, 100]);
-usleep($micros);
-$rtf->$filter_name('system', 0, ['note_off', $rtf->channel, 60, 100]);
+# my $micros = 500_000;
+# $rtf->$filter_name('system', 0, ['note_on', $rtf->channel, 60, 100]);
+# usleep($micros);
+# $rtf->$filter_name('system', 0, ['note_off', $rtf->channel, 60, 100]);
 
 $rtc->run;
