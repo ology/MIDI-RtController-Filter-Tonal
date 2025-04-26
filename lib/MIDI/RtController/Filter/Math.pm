@@ -6,9 +6,11 @@ use v5.36;
 
 use strictures 2;
 use Moo;
-use Types::MIDI qw(Channel);
-use Types::Standard qw(Num Maybe);
+use Types::Standard qw(Num);
+use Types::Common::Numeric qw(PositiveInt PositiveNum);
 use namespace::clean;
+
+extends 'MIDI::RtController::Filter';
 
 =head1 SYNOPSIS
 
@@ -39,76 +41,6 @@ L<MIDI::RtController> filters.
 
 =head1 ATTRIBUTES
 
-=head2 rtc
-
-  $rtc = $filter->rtc;
-
-The required L<MIDI::RtController> instance provided in the
-constructor.
-
-=cut
-
-has rtc => (
-    is       => 'ro',
-    isa      => sub { die 'Invalid rtc' unless ref($_[0]) eq 'MIDI::RtController' },
-    required => 1,
-);
-
-=head2 channel
-
-  $channel = $filter->channel;
-  $filter->channel($number);
-
-The current MIDI channel (0-15, drums=9).
-
-Default: C<0>
-
-=cut
-
-has channel => (
-    is      => 'rw',
-    isa     => Channel,
-    default => sub { 0 },
-);
-
-=head2 value
-
-  $value = $filter->value;
-  $filter->value($number);
-
-Return or set the MIDI event value. This is a generic setting that can
-be used by filters to set or retrieve state. This often a whole number
-between C<0> and C<127>, but can take any number.
-
-Default: C<undef>
-
-=cut
-
-has value => (
-    is      => 'rw',
-    isa     => Maybe[Num],
-    default => undef,
-);
-
-=head2 trigger
-
-  $trigger = $filter->trigger;
-  $filter->trigger($number);
-
-Return or set the trigger. This is a generic setting that
-can be used by filters to set or retrieve state. This often a whole
-number between C<0> and C<127>, but can take any number.
-
-Default: C<undef>
-
-=cut
-
-has trigger => (
-    is      => 'rw',
-    isa     => Maybe[Num],
-    default => undef,
-);
-
 =head2 delay
 
   $delay = $filter->delay;
@@ -122,7 +54,7 @@ Default: C<0.1> seconds
 
 has delay => (
     is      => 'rw',
-    isa     => Num,
+    isa     => PositiveNum,
     default => sub { 0.1 },
 );
 
@@ -139,7 +71,7 @@ Default: C<3>
 
 has feedback => (
     is      => 'rw',
-    isa     => Num,
+    isa     => PositiveInt,
     default => sub { 1 },
 );
 
