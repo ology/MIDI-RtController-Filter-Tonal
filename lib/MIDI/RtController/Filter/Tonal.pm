@@ -18,9 +18,12 @@ use Music::Chord::Note ();
 use Music::Note ();
 use Music::ToRoman ();
 use Music::VoiceGen ();
-use Types::MIDI qw(Channel);
+use Types::Common::Numeric qw(NegativeInt PositiveInt PositiveNum);
+use Types::MIDI qw(Velocity);
 use Types::Standard qw(ArrayRef Num Maybe Str);
 use namespace::clean;
+
+extends 'MIDI::RtController::Filter';
 
 =head1 SYNOPSIS
 
@@ -48,21 +51,6 @@ L<MIDI::RtController> filters.
 
 =head1 ATTRIBUTES
 
-=head2 rtc
-
-  $rtc = $filter->rtc;
-
-The required L<MIDI::RtController> instance provided in the
-constructor.
-
-=cut
-
-has rtc => (
-    is  => 'ro',
-    isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'MIDI::RtController' },
-    required => 1,
-);
-
 =head2 pedal
 
   $pedal = $filter->pedal;
@@ -78,63 +66,8 @@ Which is the MIDI-number for G below middle-C.
 
 has pedal => (
     is  => 'rw',
-    isa => Num,
+    isa => Velocity,
     default => sub { 55 },
-);
-
-=head2 channel
-
-  $channel = $filter->channel;
-  $filter->channel($number);
-
-The current MIDI channel (0-15, drums=9).
-
-Default: C<0>
-
-=cut
-
-has channel => (
-    is  => 'rw',
-    isa => Channel,
-    default => sub { 0 },
-);
-
-=head2 value
-
-  $value = $filter->value;
-  $filter->value($number);
-
-Return or set the MIDI event value. This is a generic setting that can
-be used by filters to set or retrieve state. This often a whole number
-between C<0> and C<127>, but can take any number.
-
-Default: C<undef>
-
-=cut
-
-has value => (
-    is      => 'rw',
-    isa     => Maybe[Num],
-    default => sub { undef },
-);
-
-=head2 trigger
-
-  $trigger = $filter->trigger;
-  $filter->trigger($number);
-
-Return or set the trigger. This is a generic setting that
-can be used by filters to set or retrieve state. This often a whole
-number between C<0> and C<127>, but can take any number.
-
-Default: C<undef>
-
-=cut
-
-has trigger => (
-    is      => 'rw',
-    isa     => Maybe[Num],
-    default => sub { undef },
 );
 
 =head2 delay
@@ -185,7 +118,7 @@ Default: C<10>
 
 has velocity => (
     is  => 'rw',
-    isa => Num,
+    isa => Velocity,
     default => sub { 10 },
 );
 
@@ -202,7 +135,7 @@ Default: C<1>
 
 has feedback => (
     is  => 'rw',
-    isa => Num,
+    isa => PositiveInt,
     default => sub { 1 },
 );
 
@@ -219,7 +152,7 @@ Default: C<-12>
 
 has offset => (
     is  => 'rw',
-    isa => Num,
+    isa => NegativeInt | PositiveInt,
     default => sub { -12 },
 );
 
@@ -264,7 +197,7 @@ The voice intervals used by the C<walk_tone> filter.
 
 has intervals => (
     is  => 'rw',
-    isa => ArrayRef[Num],
+    isa => ArrayRef[NegativeInt | PositiveInt],
     default => sub { [qw(-3 -2 -1 1 2 3)] },
 );
 
@@ -280,7 +213,7 @@ C<walk_tone> filters.
 
 has arp => (
     is  => 'rw',
-    isa => ArrayRef[Num],
+    isa => ArrayRef[Velocity],
     default => sub { [] },
 );
 
