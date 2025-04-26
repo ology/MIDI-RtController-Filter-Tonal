@@ -172,6 +172,8 @@ __END__
 
 The eg/*.pl program(s) in this distribution
 
+L<MIDI::RtController::Filter>
+
 L<MIDI::RtController::Filter::Tonal>
 
 L<MIDI::RtController::Filter::Drums>
