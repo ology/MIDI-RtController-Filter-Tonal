@@ -1,6 +1,7 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+  - Use the parent filter class now.
 
 0.0306 2025-04-23 08:54:05
   - Add the eg/play.pl program to illustrate direct calling.
