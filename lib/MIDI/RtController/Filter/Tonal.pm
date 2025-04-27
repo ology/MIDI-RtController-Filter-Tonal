@@ -44,7 +44,7 @@ extends 'MIDI::RtController::Filter';
 
 =head1 DESCRIPTION
 
-C<MIDI::RtController::Filter::Tonal> is the collection of tonal
+C<MIDI::RtController::Filter::Tonal> is a collection of tonal
 L<MIDI::RtController> filters.
 
 =cut
@@ -350,7 +350,7 @@ sub pedal_tone ($self, $device, $dt, $event) {
         $delay_time *= $self->factor if defined $self->factor;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
     }
-    return 0;
+    return $self->continue;
 }
 
 =head2 chord_tone
@@ -385,7 +385,7 @@ sub chord_tone ($self, $device, $dt, $event) {
 
     my @notes = $self->_chord_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $val ]) for @notes;
-    return 0;
+    return $self->continue;
 }
 
 =head2 delay_tone
@@ -418,7 +418,7 @@ sub delay_tone ($self, $device, $dt, $event) {
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
         $val -= $self->velocity;
     }
-    return 0;
+    return $self->continue;
 }
 
 =head2 offset_tone
@@ -443,7 +443,7 @@ sub offset_tone ($self, $device, $dt, $event) {
 
     my @notes = $self->_offset_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $val ]) for @notes;
-    return 0;
+    return $self->continue;
 }
 
 =head2 walk_tone
@@ -494,7 +494,7 @@ sub walk_tone ($self, $device, $dt, $event) {
         $delay_time *= $self->factor if defined $self->factor;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
     }
-    return 0;
+    return $self->continue;
 }
 
 =head2 arp_tone
@@ -544,7 +544,7 @@ sub arp_tone ($self, $device, $dt, $event) {
         $delay_time += $self->delay;
         $delay_time *= $self->factor if defined $self->factor;
     }
-    return 1;
+    return $self->continue;
 }
 
 1;
