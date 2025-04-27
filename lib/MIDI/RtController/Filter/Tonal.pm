@@ -31,16 +31,16 @@ extends 'MIDI::RtController::Filter';
   use MIDI::RtController ();
   use MIDI::RtController::Filter::Tonal ();
 
-  my $rtc = MIDI::RtController->new(
+  my $controller = MIDI::RtController->new(
     input  => 'keyboard',
     output => 'usb',
   );
 
-  my $filter = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
+  my $filter = MIDI::RtController::Filter::Tonal->new(rtc => $controller);
 
-  $rtc->add_filter('pedal', note_on => $filter->curry::pedal_tone);
+  $controller->add_filter('pedal', note_on => $filter->curry::pedal_tone);
 
-  $rtc->run;
+  $controller->run;
 
 =head1 DESCRIPTION
 
@@ -231,7 +231,7 @@ Default: C<[up, down, random]>
 
 has arp_types => (
     is  => 'rw',
-    isa => sub { die 'Invalid rtc' unless ref($_[0]) eq 'Array::Circular' },
+    isa => sub { die 'Invalid controller' unless ref($_[0]) eq 'Array::Circular' },
     default => sub { Array::Circular->new(qw(up down random)) },
 );
 
