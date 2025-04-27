@@ -166,8 +166,6 @@ L<MIDI::RtController::Filter>
 
 L<Moo>
 
-L<Types::MIDI>
-
 L<Types::Standard>
 
 L<Types::Common::Numeric>
