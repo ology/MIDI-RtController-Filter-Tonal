@@ -554,17 +554,15 @@ __END__
 
 The F<eg/*.pl> program(s) in this distribution
 
-L<MIDI::RtController::Filter::Drums>
-
-L<MIDI::RtController::Filter::Math>
-
-L<MIDI::RtController::Filter::CC>
+L<curry>
 
 L<Array::Circular>
 
 L<List::SomeUtils>
 
 L<List::Util>
+
+L<MIDI::RtController::Filter>
 
 L<MIDI::RtMidi::ScorePlayer>
 
@@ -579,6 +577,8 @@ L<Music::Note>
 L<Music::ToRoman>
 
 L<Music::VoiceGen>
+
+L<Types::Common::Numeric>
 
 L<Types::MIDI>
 
