@@ -1,6 +1,7 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+  - Improve documentation.
 
 0.0400 2025-04-26 16:07:45
   - Use the parent filter class now.
