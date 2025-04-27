@@ -111,18 +111,8 @@ has down => (
 
 =head1 METHODS
 
-All filter methods must accept the object, a MIDI device name, a
-delta-time, and a MIDI event ARRAY reference, like:
-
-  sub stair_step ($self, $device, $delta, $event) {
-    my ($event_type, $chan, $note, $value) = $event->@*;
-    ...
-    return $boolean;
-  }
-
-A filter also must return a boolean value. This tells
-L<MIDI::RtController> to continue processing other known filters or
-not.
+To make and use filters, please see the documentation in
+L<MIDI::RtController::Filter>.
 
 =head2 stair_step
 
