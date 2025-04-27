@@ -18,19 +18,19 @@ extends 'MIDI::RtController::Filter';
   use MIDI::RtController ();
   use MIDI::RtController::Filter::Math ();
 
-  my $rtc = MIDI::RtController->new(
+  my $controller = MIDI::RtController->new(
     input  => 'keyboard',
     output => 'usb',
   );
 
-  my $filter = MIDI::RtController::Filter::Math->new(rtc => $rtc);
+  my $filter = MIDI::RtController::Filter::Math->new(rtc => $controller);
 
   $filter->control(1); # CC#01 = mod-wheel
   $filter->channel(0);
 
-  $rtc->add_filter('stair_step', note_on => $filter->curry::stair_step);
+  $controller->add_filter('stair_step', note_on => $filter->curry::stair_step);
 
-  $rtc->run;
+  $controller->run;
 
 =head1 DESCRIPTION
 
