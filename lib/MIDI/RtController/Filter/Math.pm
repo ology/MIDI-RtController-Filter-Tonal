@@ -152,7 +152,7 @@ sub stair_step ($self, $device, $dt, $event) {
         $delay_time += $self->delay;
         $self->rtc->delay_send($delay_time, [ $ev, $self->channel, $n, $val ]);
     }
-    return 0;
+    return $self->continue;
 }
 
 1;
