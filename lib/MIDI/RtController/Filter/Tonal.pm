@@ -4,7 +4,7 @@ package MIDI::RtController::Filter::Tonal;
 
 use v5.36;
 
-our $VERSION = '0.0403';
+our $VERSION = '0.0500';
 
 use strictures 2;
 use curry;
@@ -317,6 +317,24 @@ delta-time, and a MIDI event ARRAY reference, like:
 A filter also must return a boolean value. This tells
 L<MIDI::RtController> to continue processing other known filters or
 not.
+
+=head2 single_tone
+
+Play a single of note!
+
+If B<trigger> or B<value> is set, the filter checks those against the
+MIDI event C<note> or C<value>, respectively, to see if the filter
+should be applied.
+
+=cut
+
+sub single_tone ($self, $device, $dt, $event) {
+    my ($ev, $chan, $note, $val) = $event->@*;
+    return 0 if defined $self->trigger && $note != $self->trigger;
+    return 0 if defined $self->value && $val != $self->value;
+    $self->rtc->send_it([ $ev, $self->channel, $note, $val ]);
+    return $self->continue;
+}
 
 =head2 pedal_tone
 
