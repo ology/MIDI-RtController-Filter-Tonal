@@ -1,6 +1,8 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+
+0.0502 2026-08-20 11:29:17
   - Fix potential code failures.
 
 0.0501 2026-03-15 19:15:59
