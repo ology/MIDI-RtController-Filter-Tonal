@@ -7,6 +7,7 @@ use v5.36;
 our $VERSION = '0.0501';
 
 use strictures 2;
+use Carp qw(croak);
 use curry;
 use Array::Circular ();
 use List::SomeUtils qw(first_index);
@@ -22,6 +23,10 @@ use Types::Common::Numeric qw(NegativeInt PositiveInt PositiveNum);
 use Types::MIDI qw(Velocity);
 use Types::Standard qw(ArrayRef InstanceOf Num Maybe Str);
 use namespace::clean;
+
+use constant KNOWN_FILTERS => qw(
+    pedal_tone chord_tone delay_tone offset_tone walk_tone arp_tone
+);
 
 extends 'MIDI::RtController::Filter';
 
@@ -285,38 +290,26 @@ to set.
 =cut
 
 sub add_filters ($filters, $controllers) {
-    for my $params (@$filters) {
-        my $port = delete $params->{port};
+    for my $orig (@$filters) {
+        my %params = %$orig; # work on a copy, don't mutate the caller's hashref
+        my $port = delete $params{port};
         # skip unnamed and unknown entries
         next if !$port || !exists $controllers->{$port};
-        my $type   = delete $params->{type}  || 'delay_tone';
-        my $event  = delete $params->{event} || 'all';
+        my $type = delete $params{type} || 'delay_tone';
+        croak qq{Unknown filter type "$type" (must be one of: } . join(', ', KNOWN_FILTERS) . ')'
+            unless grep { $_ eq $type } KNOWN_FILTERS;
+        my $event = delete $params{event} || 'all';
         my $filter = __PACKAGE__->new(
             rtc => $controllers->{$port}
         );
         # assume all remaining key/values are module attributes
-        for my $param (keys %$params) {
-            $filter->$param($params->{$param});
+        for my $param (keys %params) {
+            $filter->$param($params{$param});
         }
         my $method = "curry::$type";
         $controllers->{$port}->add_filter($type, $event => $filter->$method);
     }
 }
-
-=head1 FILTERS
-
-All filter methods must accept the object, a MIDI device name, a
-delta-time, and a MIDI event ARRAY reference, like:
-
-  sub pedal_tone ($self, $name, $delta, $event) {
-    my ($event_type, $chan, $note, $value) = $event->@*;
-    ...
-    return $boolean;
-  }
-
-A filter also must return a boolean value. This tells
-L<MIDI::RtController> to continue processing other known filters or
-not.
 
 =head2 pedal_tone
 
