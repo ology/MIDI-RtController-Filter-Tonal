@@ -65,7 +65,7 @@ has delay => (
 
 The amount of feedback.
 
-Default: C<3>
+Default: C<1>
 
 =cut
 

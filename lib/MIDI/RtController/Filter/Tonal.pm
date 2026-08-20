@@ -340,8 +340,8 @@ sub _pedal_notes ($self, $note) {
 }
 sub pedal_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if defined $self->trigger && $note != $self->trigger;
-    return 0 if defined $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && defined $note && $note != $self->trigger;
+    return 0 if defined $self->value   && defined $val  && $val  != $self->value;
 
     my @notes = $self->_pedal_notes($note);
     my $delay_time = 0;
@@ -380,8 +380,8 @@ sub _chord_notes ($self, $note) {
 }
 sub chord_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if defined $self->trigger && $note != $self->trigger;
-    return 0 if defined $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && defined $note && $note != $self->trigger;
+    return 0 if defined $self->value   && defined $val  && $val  != $self->value;
 
     my @notes = $self->_chord_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $val ]) for @notes;
@@ -407,8 +407,8 @@ sub _delay_notes ($self, $note) {
 }
 sub delay_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if defined $self->trigger && $note != $self->trigger;
-    return 0 if defined $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && defined $note && $note != $self->trigger;
+    return 0 if defined $self->value   && defined $val  && $val  != $self->value;
 
     my @notes = $self->_delay_notes($note);
     my $delay_time = 0;
@@ -438,8 +438,8 @@ sub _offset_notes ($self, $note) {
 }
 sub offset_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if defined $self->trigger && $note != $self->trigger;
-    return 0 if defined $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && defined $note && $note != $self->trigger;
+    return 0 if defined $self->value   && defined $val  && $val  != $self->value;
 
     my @notes = $self->_offset_notes($note);
     $self->rtc->send_it([ $ev, $self->channel, $_, $val ]) for @notes;
@@ -475,8 +475,8 @@ sub _walk_notes ($self, $note) {
 }
 sub walk_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if defined $self->trigger && $note != $self->trigger;
-    return 0 if defined $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && defined $note && $note != $self->trigger;
+    return 0 if defined $self->value   && defined $val  && $val  != $self->value;
 
     # make sure the note_on and note_off notes are the same
     my $notes = $self->arp;
@@ -534,8 +534,8 @@ sub _arp_notes ($self, $note) {
 }
 sub arp_tone ($self, $device, $dt, $event) {
     my ($ev, $chan, $note, $val) = $event->@*;
-    return 0 if defined $self->trigger && $note != $self->trigger;
-    return 0 if defined $self->value && $val != $self->value;
+    return 0 if defined $self->trigger && defined $note && $note != $self->trigger;
+    return 0 if defined $self->value   && defined $val  && $val  != $self->value;
 
     my @notes = $self->_arp_notes($note);
     my $delay_time = 0;
