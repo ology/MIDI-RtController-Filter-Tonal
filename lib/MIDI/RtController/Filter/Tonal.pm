@@ -4,7 +4,7 @@ package MIDI::RtController::Filter::Tonal;
 
 use v5.36;
 
-our $VERSION = '0.0501';
+our $VERSION = '0.0502';
 
 use strictures 2;
 use Carp qw(croak);
