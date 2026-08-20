@@ -20,7 +20,7 @@ use Music::ToRoman ();
 use Music::VoiceGen ();
 use Types::Common::Numeric qw(NegativeInt PositiveInt PositiveNum);
 use Types::MIDI qw(Velocity);
-use Types::Standard qw(ArrayRef Num Maybe Str);
+use Types::Standard qw(ArrayRef InstanceOf Num Maybe Str);
 use namespace::clean;
 
 extends 'MIDI::RtController::Filter';
@@ -230,8 +230,8 @@ Default: C<[up, down, random]>
 =cut
 
 has arp_types => (
-    is  => 'rw',
-    isa => sub { die 'Invalid controller' unless ref($_[0]) eq 'Array::Circular' },
+    is      => 'rw',
+    isa     => InstanceOf['Array::Circular'],
     default => sub { Array::Circular->new(qw(up down random)) },
 );
 
