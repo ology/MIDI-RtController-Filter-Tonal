@@ -166,7 +166,7 @@ has offset => (
   $key = $filter->key;
   $filter->key($number);
 
-The musical key (C<C-B>).
+The musical key (C<C>).
 
 =cut
 
