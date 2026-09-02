@@ -230,14 +230,14 @@ has arp => (
 A list of known arpeggiation types. This is an L<Array::Circular>
 instance.
 
-Default: C<[up, down, random]>
+Default: C<[up, down, updown, random, converge, diverge]>
 
 =cut
 
 has arp_types => (
     is      => 'rw',
     isa     => InstanceOf['Array::Circular'],
-    default => sub { Array::Circular->new(qw(up down random)) },
+    default => sub { Array::Circular->new(qw(up down updown random converge diverge)) },
 );
 
 =head2 arp_type
