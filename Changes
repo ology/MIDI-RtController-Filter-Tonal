@@ -1,6 +1,8 @@
 Revision history for MIDI-RtController-Filter-Tonal
 
 {{$NEXT}}
+
+0.0503 2026-09-22 08:48:14
   - Fix documentation.
   - Add the eg/arp.pl example program.
   - Remove heavy cruft that I accidentally left in. :eyeroll:
