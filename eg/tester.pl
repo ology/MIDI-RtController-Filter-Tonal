@@ -17,7 +17,10 @@ my $rtc = MIDI::RtController->new(
     verbose => 1,
 );
 
-my $rtf = MIDI::RtController::Filter::Tonal->new(rtc => $rtc);
+my $rtf = MIDI::RtController::Filter::Tonal->new(
+    rtc     => $rtc,
+    verbose => 1,
+);
 
 $rtf->feedback(4);
 $rtf->delay(0.15);

@@ -20,6 +20,7 @@ my $rtc = MIDI::RtController->new(
 my $rtf = MIDI::RtController::Filter::Tonal->new(
     rtc      => $rtc,
     arp_type => 'down',
+    verbose  => 1,
 );
 
 $rtf->delay(0.2);
