@@ -12,7 +12,6 @@ use curry;
 use Array::Circular ();
 use List::SomeUtils qw(first_index);
 use List::Util qw(shuffle uniq);
-use MIDI::RtMidi::ScorePlayer ();
 use Moo;
 use Music::Scales qw(get_scale_MIDI get_scale_notes);
 use Music::Chord::Note ();
@@ -556,8 +555,6 @@ L<List::SomeUtils>
 L<List::Util>
 
 L<MIDI::RtController::Filter>
-
-L<MIDI::RtMidi::ScorePlayer>
 
 L<Moo>
 
