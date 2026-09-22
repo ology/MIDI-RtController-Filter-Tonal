@@ -12,8 +12,8 @@ my $output_name = shift || 'fluid';    # fluidsynth
 my $filter_name = shift || 'pedal_tone';
 
 my $rtc = MIDI::RtController->new(
-    input  => $input_name,
-    output => $output_name,
+    input   => $input_name,
+    output  => $output_name,
     verbose => 1,
 );
 
